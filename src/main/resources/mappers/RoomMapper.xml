@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.mapper.RoomMapper">
+
+	<insert id="insertroom">
+		insert into room(rno,roomname,price,people,content)
+		values(#{rno},#{roomname},#{price},#{people},#{content})
+	</insert>
+
+	<insert id="addAttach">
+		insert into file(fullname,rno)
+		values(#{fullName},#{rno})
+	</insert>
+
+	<select id="getAttach" resultType="String">
+		select fullname from file
+		where rno = #{rno}
+	</select>
+
+	<select id="selectAll" resultType="RoomVO">
+		select * from room
+		<!-- select r.rno, roomname,price,people,content,fullname from room r , 
+			file f where r.rno = f.rno -->
+	</select>
+
+
+	<select id="nextrno" resultType="Int">
+		select if(max(rno) is
+		null,1,max(rno)+1) from room
+	</select>
+
+	<delete id="deleteroom">
+		delete from room where rno = #{rno}
+	</delete>
+
+	<select id="selectfromrno" resultType="RoomVO">
+		select * from room where
+		rno = #{rno}
+	</select>
+
+	<update id="updateroom">
+		update room set
+		roomname = #{roomname}, price = #{price}, people = #{people}, content
+		=
+		#{content}
+		where rno = #{rno}
+	</update>
+
+
+	<delete id="removeAttach">
+		delete from file where rno = #{rno}
+	</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

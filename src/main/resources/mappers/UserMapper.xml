@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.mapper.UserMapper">
+
+	<select id="login" resultType="UserVO">
+		select uid , upw ,
+		uname,uaddr,utel from user
+		where uid = #{uid}
+		and upw = #{upw}
+	</select>
+	<insert id="join">
+		insert into
+		user(uid,upw,uname,uaddr,utel)
+		values(#{uid},#{upw},#{uname},#{uaddr},#{utel})
+	</insert>
+	<select id="idCheck" resultType="UserVO">
+		select uid from user
+	</select>
+	<select id="selectuser" resultType="UserVO">
+		select * from user where uid = #{uid}
+	</select>
+
+<!-- select uname,bno,rno,person,startdate,enddate,state from user u,booking b where u.uid=b.uid;
+select * from room,booking b,user u where u.uid=b.uid;
+ -->
+	<select id="selectmypage" resultType="BookingVO">
+		select * from booking where uid=#{uid}
+	</select>
+</mapper>

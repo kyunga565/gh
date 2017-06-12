@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.mapper.BookingMapper">
+
+
+	<insert id="reservation">
+		insert into booking(bno,rno,person,uid,startdate,enddate,state) values(#{bno},#{rno},#{person},#{uid},#{startdate},#{enddate},#{state})
+	</insert>
+
+	<select id="nextbno" resultType="Int">
+		select if(max(bno) is
+		null,1,max(bno)+1) from booking
+	</select>
+	
+	<select id="maxperson" resultType="Int">
+		select max(person) from booking 
+	</select>
+	
+	<select id="selectrno" resultType="int">
+		select rno from booking where uid=#{uid}
+	</select>
+</mapper>

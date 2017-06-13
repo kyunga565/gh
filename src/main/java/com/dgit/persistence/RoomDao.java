@@ -2,6 +2,8 @@ package com.dgit.persistence;
 
 import java.util.List;
 
+import com.dgit.domain.BookingVO;
+import com.dgit.domain.Booking_Room;
 import com.dgit.domain.RoomVO;
 
 public interface RoomDao {
@@ -22,4 +24,8 @@ public interface RoomDao {
 	void update(RoomVO vo) throws Exception;
 	
 	void removeAttach(int rno) throws Exception;
+	List<RoomVO> selectbook(String id) throws Exception;
+	
+	List<Booking_Room> selectEND(String id) throws Exception;
+
 }

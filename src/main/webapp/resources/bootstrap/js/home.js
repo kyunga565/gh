@@ -19,7 +19,15 @@ $(function() {
 	})
 	$(".closebtn").eq(2).click(function(e) {
 		e.preventDefault();
-		$("#book-wrap").slideToggle(1000)// .css("display","none")
+		$("#book-wrap").slideToggle(1000)
+	})
+	$(".mem-closebtn").eq(0).click(function(e) {
+		e.preventDefault();
+		$("#member-pw-update-wrap").slideToggle(1000)
+	})
+	$(".mem-closebtn").eq(1).click(function(e) {
+		e.preventDefault();
+		$("#member-info-update-wrap").slideToggle(1000)
 	})
 	/* 회원가입 화면 */
 	$("#joinbtn").click(function(e) {
@@ -105,45 +113,98 @@ $(function() {
 		e.preventDefault();
 		$("#book-wrap").slideToggle(1000)
 	})
-	
-    /* 예약 --> ㅇㅖ약취소 */
-	var state = $("#btnstate").text()
-	var sessionID = $("#session-id").val()
-	if (state == "예약") {
-		$(document).on("mouseover","#btnstate",function(){
-			$(this).text("예약취소").click(function(){
-				if(confirm("예약을 취소하시겠습니까?")){
-					/* 예약취소 ajax */
-					$.ajax({
-						url:"changeState",
-						dataType:"text",
-						data : sessionID,
-						type : "get",
-						success:function(){
-							
-						}
-						
-					})
-					
-					alert("예약이 취소되었습니다.")
+
+	/* 예약하기버튼누르면 예약화면 */
+	$("#gobook2").click(function(e) {
+		e.preventDefault();
+		$("#book-wrap").slideToggle(1000)
+	})
+	/* 회원탈퇴 */
+	$("#dropout").click(function(e) {
+		e.preventDefault();
+		var sessionID = $("#session-id").val()
+		if(confirm("정말탈퇴하시겠습니까?")){
+			$.ajax({
+				url : "dropout",
+				dataType : "text",
+				data : sessionID,
+				type : "get",
+				success : function() {
+					alert("탈퇴완료")
+					self.location="test"
+				},
+				error : function() {
+					alert("탈퇴실패")
 				}
 			})
-		})
-		$(document).on("mouseout","#btnstate",function(){
-			$(this).text("예약")
-		})
-		
-	} else if (state == "예약취소") {
-		$(document).on("mouseover","#btnstate",function(){
-			$(this).text("예약하기").click(function(){
-				self.location="${pageContext.request.contextPath}/test/#about"
-			})
-		})
-		$(document).on("mouseout","#btnstate",function(){
-			$(this).text("예약취소")
-		})
-	}
+		}
+	})
 	
+	/* ㅇㅖ약 ->예약취소 */
+	$(".btn-state").each(function(i){
+		var bno = $(".bno-input").eq(i).val()
+		if($(".btn-state").eq(i).text() == "예약"){
+			$(".btn-state").eq(i).mouseover(function(){
+				$(".btn-state").eq(i).text("예약취소").click(function(){
+					if(confirm("예약을 취소하시겠습니까?")){
+						/* 예약취소 ajax */
+						$.ajax({
+							url:"changeState",
+							dataType:"text",
+							data : {"bno":bno},
+							type : "get",
+							success:function(){
+								$('#reservation').load(document.URL + ' #reservation .container');
+							}
+						})
+					}
+				})
+			})
+			$(".btn-state").eq(i).mouseout(function(){
+				$(".btn-state").eq(i).text("예약")
+			})
+		}
+		if($(".btn-state").eq(i).text() == "예약취소"){
+		//	$(".tr-color").eq(i).css("background-color","rgba(128,171,187,0.15)")
+		//	$(".tr-color").eq(i).css("color","gray")
+			$(".tr-color").eq(i).css("opacity","0.4")
+		}
+	})
+	
+	/* 회원정보 수정할때 비밀번호 */
+	$("form[name='f5']").submit(function() {
+		if ($("#upw0").val() != $("#upw").val()) {
+			var $next = $("#upw").nextAll(".checkpw").eq(0)
+			$next.css("display", "inline")
+			return false
+		}else if($("#default_pw").val() != $("#default_pw2").val()){
+			var $next2 = $("#default_pw2").nextAll(".default_checkpw").eq(0)
+			$next2.css("display", "inline")
+			return false
+		}
+	})
+	
+	/* 비밀번호 수정화면 */
+	$("#chPW").click(function(e) {
+		e.preventDefault();
+		$("#member-pw-update-wrap").slideToggle(1000)
+	})
+	
+	/* 회원정보 수정화면 */
+	$("#updatemem").click(function(e) {
+		e.preventDefault();
+		$("#member-info-update-wrap").slideToggle(1000)
+	})
+	
+	/* mypage에서 버튼에 마우스올리면 */
+	$("#mypage button").each(function(i){
+		$("#mypage button").eq(i).mouseover(function(){
+			$(this).css("color","red")
+		})
+		$("#mypage button").eq(i).mouseout(function(){
+			$(this).css("color","#f05f40")
+		})
+	})
 	
 	
 	

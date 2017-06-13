@@ -1,10 +1,10 @@
 package com.dgit.controller;
 
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dgit.domain.BookingVO;
@@ -20,12 +20,17 @@ public class BookingController {
 
 	@RequestMapping(value = "booking", method = RequestMethod.POST)
 	public String registerPost(BookingVO vo, RedirectAttributes rttr) throws Exception {
-
 		service.reservation(vo);
-
 		rttr.addFlashAttribute("book", "success");// 성공햇다고 alert창 띄울려고
 		System.out.println("예약완료");
 		return "redirect:test";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "changeState", method = RequestMethod.GET)
+	public void stateChange(int bno) throws Exception {
+		System.out.println(bno+"예약취소로 변경");
+		service.changeState(bno);
+	}
+	
 }

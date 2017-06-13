@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dgit.domain.Booking_Room;
 import com.dgit.domain.RoomVO;
 
 @Repository
@@ -74,7 +75,17 @@ public class RoomDaoImpl implements RoomDao {
 
 	@Override
 	public void removeAttach(int rno) throws Exception {
-		session.delete(namespace+".removeAttach",rno);
+		session.delete(namespace + ".removeAttach", rno);
+	}
+
+	@Override
+	public List<RoomVO> selectbook(String id) throws Exception {
+		return session.selectList(namespace + ".selectbook", id);
+	}
+
+	@Override
+	public List<Booking_Room> selectEND(String id) throws Exception {
+		return session.selectList(namespace + ".selectEND", id);
 	}
 
 }

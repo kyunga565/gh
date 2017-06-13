@@ -11,17 +11,21 @@ iframe{float: left;}
 #login-wrap{color:black;position: absolute;background-color:#f9f9f9;display: none;
 			 width:500px; height:340px; margin-left: 700px; box-shadow:0 0 5px gray;
 			margin-top:200px;}
-
-
-
 #addroom-wrap{display: none;}
-.login-div{padding-top:60px;  width:80%; margin:0 auto;}
+
+.login-div{padding-top:60px; width:80%; margin:0 auto;}
 .login-header{width:100%; height: 10px; background-color:#f05f40; }
 .login-header2{width:100%; height: 60px; background-color:#f5f5f5; border-bottom:1px solid #d2e1e7;}
 form[name='f0'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
 form[name='f1'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
+form[name='f2'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
+form[name='f3'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
+form[name='f4'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
+form[name='f5'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
+form[name='f6'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
 form[id='booking'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
-.closebtn{ float: right;margin:10px; }	
+.closebtn{ float: right;margin:10px; }		
+.mem-closebtn{ float: right;margin:10px; }	
 .btn-login{padding:15px; margin:15px; color:white; border-radius:20px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}	
 .btn-room{border:1px solid #d2e1e7; padding:10px; margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}
 form[name='f1'] input[name='uid']{margin-left:60px;}
@@ -29,6 +33,7 @@ form[name='f1'] input[name='uid']{margin-left:60px;}
 
 #checkID{text-decoration: none; font-size: 12px; color:green; margin-left: 5px; background-color: #f9f9f9;border:none;}
 .checkpw{font-size: 12px; color:red; display: none;}
+.default_checkpw{font-size: 12px; color:red; display: none;}
 .checktrue{font-size: 12px; color:red; display: none;}
 .checkfalse{font-size: 12px; color:red; display: none;}
 
@@ -39,16 +44,21 @@ form[name='f2'] #contents{ margin: 0 auto;border:2px solid #d2e1e7;  border-radi
 form[id='booking'] select{ width: 250px;border:2px solid #d2e1e7;height: 35px;border-radius:5px;}
 
 
+.btn-state{border:1px solid #d2e1e7; padding:10px; margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}
 
 
+#member-pw-update-wrap{color:black;position: absolute;background-color:#f9f9f9;display:none;
+			 width:25%; height:380px; margin-left: 700px; box-shadow:0 0 5px gray;
+			margin-top:200px;}
+
+.member-update-div{padding-top:40px; width:50%; margin:0 auto;}
+
+#chPW{font-size: 12px;}
 
 
-
-
-
-
-
-
+#member-info-update-wrap{color:black;position: absolute;background-color:#f9f9f9;display:none;
+			 width:25%; height:380px; margin-left: 700px; box-shadow:0 0 5px gray;
+			margin-top:200px;}
 
 
 

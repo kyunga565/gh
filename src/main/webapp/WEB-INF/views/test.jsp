@@ -111,7 +111,7 @@ var dateFormat = "yy/mm/dd",
                         <a class="page-scroll" href="#services">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">gallery</a>
+                        <a class="page-scroll" href="#portfolio">Gallery</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#room">Room</a>
@@ -143,7 +143,7 @@ var dateFormat = "yy/mm/dd",
                 <p>저희 D.D.D는 명덕역 도보 1-5분거리 동성로  · 수성못  및  모든지역 10-20분 거리의 최고의 장소에 위치하였습니다. 
                 	대구 중심에 위치한 D.D.D에서 전국 각지의 Backpacker 들과 PARTY를 즐기며 소중한 추억을 만들어 보세요.</p>
                 <a href="#about" class="btn btn-primary btn-xl page-scroll">Infomation</a>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Reservation</a>
+                <a href="#" id="gobook2" class="btn btn-primary btn-xl page-scroll">Reservation</a>
             </div>
         </div>
 
@@ -203,11 +203,10 @@ var dateFormat = "yy/mm/dd",
 				</a>
 			</div>
 			<div class="login-div">
-				<form action="booking" method="post" name="" id="booking">
-					<input type="text" name="bno" value="${nextBno }" /><br><br>
-					<input type="text" name="uid" placeholder="ㅇㅖ약자" /><br><br>
+				<form action="booking" method="post" name="f4" id="booking">
+					<input type="text" name="bno" value="${nextBno }" readonly="readonly"/><br><br>
+					<input type="text" name="uid" value="<%=session.getAttribute("id")%>" readonly/><br><br>
 					 
-					
  					<select name="rno">
 						<option disabled="disabled" selected="selected"> -----시설이름----- </option>
 						<c:forEach items="${roomVO }" var="i">

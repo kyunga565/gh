@@ -4,6 +4,9 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.dgit.domain.BookingVO;
+import com.dgit.domain.Booking_Room;
 import com.dgit.domain.RoomVO;
 import com.dgit.persistence.RoomDao;
 
@@ -85,5 +88,32 @@ public class RoomServiceImpl implements RoomService {
 			dao.addAttach(fileName, vo.getRno());
 		}
 	}
+	
+	@Override
+	public List<RoomVO> selectbook(String id) throws Exception {	
+		List<RoomVO> vo = dao.selectbook(id);
+//		List<RoomVO> vo = dao.selectAll();
+
+		for (int i = 0; i < dao.selectbook(id).size(); i++) {
+			List<String> files = dao.getAttach(vo.get(i).getRno());
+			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+		}
+		return vo;
+	//	return dao.selectbook(id);
+	}
+
+	@Override
+	public List<Booking_Room> selectEND(String id) throws Exception {
+		
+		List<Booking_Room> vo = dao.selectEND(id);
+
+		for (int i = 0; i < dao.selectbook(id).size(); i++) {
+			List<String> files = dao.getAttach(vo.get(i).getRno());
+			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+		}
+		return vo;
+		
+	}
+
 
 }

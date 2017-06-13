@@ -49,31 +49,22 @@ public class HomeController {
 		model.addAttribute("maxperson", Maxperson);
 	}
 
-/*	@RequestMapping(value = "test2", method = RequestMethod.GET)
-	public void roomviewGET2(RoomVO vo, Model model) throws Exception {
-		model.addAttribute("roomVO", rservice.selectAll());
-		int Nextrno = rservice.nextrno();
-		model.addAttribute("nextRno", Nextrno);
-		int Nextbno = bservice.nextbno();
-		model.addAttribute("nextBno", Nextbno);
-		int Maxperson = bservice.maxperson();
-		model.addAttribute("maxperson", Maxperson);
-		
-	}*/
+
 
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
 	public void mypageGET(LoginVO dto,Model model, HttpServletRequest request) throws Exception {
 
 		HttpSession session = request.getSession();
-		UserVO vo = (UserVO) session.getAttribute(LoginInterceptor.LOGIN);
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("userVO", uservice.selectuser(id));
-		model.addAttribute("myinfo", uservice.selectmypage(id));
+
+//		model.addAttribute("myinfo", uservice.selectmypage(id));
+//		int rno = bservice.selectrno(id);
+//		model.addAttribute("roominfo", rservice.selectfromrno(rno));
+//		model.addAttribute("roominfo", rservice.selectbook(id));
+		model.addAttribute("mybook",bservice.selectbookfromid(id));
 		
-		int rno = bservice.selectrno(id);
-		System.out.println(rno);
-		model.addAttribute("roominfo", rservice.selectfromrno(rno));
-		
+		model.addAttribute("END", rservice.selectEND(id));
 	}
 	
 }

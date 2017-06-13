@@ -33,7 +33,24 @@ public class BookingDaoImpl implements BookingDao {
 
 	@Override
 	public int selectrno(String id) throws Exception {
-		return session.selectOne(namespace+".selectrno",id);
+		return session.selectOne(namespace + ".selectrno", id);
 	}
+
+	@Override
+	public void delreservation(String id) throws Exception {
+		session.delete(namespace + ".delreservation", id);
+	}
+
+	@Override
+	public void changeState(int bno) throws Exception {
+		session.update(namespace + ".changeState", bno);
+	}
+
+	@Override
+	public List<BookingVO> selectbookfromid(String id) throws Exception {
+		return session.selectList(namespace + ".selectbookfromid", id);
+	}
+
+	
 
 }

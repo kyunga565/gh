@@ -101,5 +101,29 @@ public class UserController {
 		rttr.addFlashAttribute("logout", "success");
 		return "redirect:/test";
 	}
+
+	
+
+	@ResponseBody
+	@RequestMapping(value = "dropout", method = RequestMethod.GET)
+	public void leavemember(HttpSession session) throws Exception {
+		String id = (String) session.getAttribute("id");
+		service.dropout(id);
+		session.removeAttribute("id");
+		session.invalidate();
+		System.out.println("회원탈퇴"+id);
+	}
+
+	@RequestMapping(value = "changePW", method = RequestMethod.POST)
+	public String changePW(LoginVO dto, HttpSession session, RedirectAttributes rttr) throws Exception {
+		String id = (String) session.getAttribute("id");
+		UserVO vo =  service.selectuser2(id);
+		vo.setUpw(dto.getUpw());
+		service.changePW(vo);
+		
+		rttr.addFlashAttribute("changePW", "success");
+		return "redirect:/mypage";
+	}
+
 	
 }

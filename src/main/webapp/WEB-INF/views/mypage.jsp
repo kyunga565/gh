@@ -17,7 +17,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
 </head>
-
+<script type="text/javascript">
+var logout = '${changePW}'
+if (logout == "success") {
+	alert("비밀번호가 정상적으로 변경되었습니다.")
+}
+</script>
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -37,19 +42,19 @@
                     </li>
                  <%} %>
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#about">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Services</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#services">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">gallery</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#portfolio">gallery</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#room">Room</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#room">Room</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="">Contact</a>
+                        <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                     <li>
                         <% if(session.getAttribute("id") == null ){ %>
@@ -64,14 +69,61 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-  
-        
+  <br><br><br>
+      
+    
+ 
+		<div id="member-pw-update-wrap">
+			<div class="login-header"></div><!-- 다홍색헤더1px -->
+			<div class="login-header2"><span><%=session.getAttribute("id") %>님의 회원정보 </span>
+				<a href="" class="mem-closebtn">
+					<img src="${pageContext.request.contextPath}/resources/bootstrap/img/x-button.png" />
+				</a>
+			</div>
+			<div class="member-update-div">
+				<form action="changePW" method="post" name="f5">
+					<c:forEach items="${userVO }" var="i">
+						<input type="hidden" value="${i.upw }" id="default_pw" />
+					</c:forEach>
+					<input type="text" placeholder="기존비밀번호" id="default_pw2" /><br><span class="default_checkpw"> 기존비밀번호를 확인하세요.</span><br>
+					<input type="text" id="upw0" name="upw0" placeholder="변경할비밀번호" /><br><br>
+					<input type="text" id="upw" name="upw" placeholder="비밀번호확인" /><br><span class="checkpw"> 비밀번호를 확인하세요.</span><br>
+					<p style="padding-left: 40px;">
+						<button type="submit" class="btn-room"> 비밀번호 수정완료  </button>
+					</p>
+				</form>
+			</div>
+		</div>
+      
+
+    
+ 
+		<div id="member-info-update-wrap">
+			<div class="login-header"></div><!-- 다홍색헤더1px -->
+			<div class="login-header2"><span><%=session.getAttribute("id") %>님의 회원정보 </span>
+				<a href="" class="mem-closebtn">
+					<img src="${pageContext.request.contextPath}/resources/bootstrap/img/x-button.png" />
+				</a>
+			</div>
+			<div class="member-update-div">
+				<form action="" method="post" name="f6">
+					<input type="text" value="<%=session.getAttribute("id") %>" readonly="readonly"/><br><br>
+					<input type="text" name="uaddr" placeholder="주소"/><br><br>
+					<input type="text" name="utel" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
+					<p style="padding-left: 40px;">
+						<button type="submit" class="btn-room"> 회원정보 수정완료  </button>
+					</p>
+				</form>
+			</div>
+		</div>
+      
 
 
 	<input type="hidden" id="session-id" value="<%=session.getAttribute("id") %>" />
-	
-	
-
+		
+		
+		
+<div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
 	<section id="mypage">
         <div class="container">
             <div class="row">
@@ -88,8 +140,8 @@
                     	<c:forEach items="${userVO }" var="i">
                     	<table>
                     		<tr>
-                    			<td style="width:100px;color:#222222;font-weight: bold;">아이디(암호)</td>
-                    			<td style="padding:20px;"> ${i.uid } (${i.upw })</td>
+                    			<td style="width:100px;color:#222222;font-weight: bold;">아이디</td>
+                    			<td style="padding:20px;"> <b style="font-size: 15px;">${i.uid }</b> <br> <a href="" id="chPW">[비밀번호변경]</a></td>
                     		</tr>
                     		<tr>
                     			<td style="color:#222222;font-weight: bold;">이름</td>
@@ -106,7 +158,8 @@
                     	</table>
                     	</c:forEach>
                     </div>
-                <button class="btn-room">수정</button><button class="btn-room">회원탈퇴</button><br><br><br>
+                <button id="updatemem" class="btn-room">수정</button><button id="dropout" class="btn-room">회원탈퇴</button><br><br><br>
+               
                 </div>
             </div>
         </div>
@@ -125,41 +178,30 @@
             <div class="row">
 				<div class="text-center">
 					<div style="margin: 5px auto 0; width: 95%;">
-						<c:forEach items="${myinfo }" var="m">
-							<table id="mypagetable" style="border:2px dotted #d2e1e7; border-collapse: collapse;width:95%;margin:0 auto;">
-								<tr>
-									<td style="padding:10px;">
-										<c:forEach var="pic" items="${roominfo.files }">
+						<table id="mypagetable" style="border:2px dotted #d2e1e7;width:100%;">
+	 						<c:forEach items="${END }" var="m">
+								<tr style="border:2px dotted #d2e1e7;" class="tr-color" >
+									<input type="hidden" value="${m.bno }" class="bno-input" />
+									<td> &nbsp;&nbsp; No.${m.bno } </td>
+	 						 		<td style="padding:10px;">
+										<c:forEach var="pic" items="${m.files }">
 											<img src="displayFile?filename=${pic }" style="width: 200px; height: 120px;" /><br>
 										</c:forEach>
 									</td>
-									<td>No.${m.bno } </td>
-									<td>< ${roominfo.roomname } ><br>${roominfo.content }</td>
-									<td style="padding:10px;">${m.person }명 </td>
-									<td>금액합계<br>${roominfo.price }원 </td>
-									<td><fmt:formatDate value="${m.startdate}" /> ~ <fmt:formatDate value="${m.enddate}" /></td>
-									<td style="width:100px;"><button class="btn-room" id="btnstate">${m.state}</button></td>
+									<td><b>< ${m.roomname } ></b><br>${m.content }</td>
+									<td>${m.person }명 / 총금액<br><b><fmt:formatNumber pattern="###,###"> ${m.price*m.person }</fmt:formatNumber></b> 원 </td>  
+									<td><b><fmt:formatDate value="${m.startdate}" /> ~ <fmt:formatDate value="${m.enddate}" /></b></td>
+									<td style="width:100px;"><button class="btn-state">${m.state}</button></td>
 								</tr>
-								
-							</table>
-						</c:forEach>
-
-
-						
+							</c:forEach>		
+						</table>
 					</div>
 				</div>
-
-
 			</div>
         </div>
     </section>
-
+</div><!-- end of #section-wrap -->
    
- 
-
-
-	
-
 	<section id="contact">
         <div class="container">
             <div class="row">

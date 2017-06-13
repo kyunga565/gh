@@ -15,10 +15,24 @@
 	</select>
 	
 	<select id="maxperson" resultType="Int">
-		select max(person) from booking 
+		select max(people) from room 
 	</select>
 	
 	<select id="selectrno" resultType="int">
 		select rno from booking where uid=#{uid}
 	</select>
+	
+	<delete id="delreservation">
+		delete from booking where uid = #{uid}
+	</delete>
+	
+	<update id="changeState">
+		update booking set state='예약취소' where bno = #{bno}
+	</update>
+	
+	<select id="selectbookfromid" resultType="BookingVO">
+		select * from booking where uid = #{uid}
+	</select>
+	
+
 </mapper>

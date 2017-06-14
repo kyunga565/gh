@@ -43,11 +43,6 @@ public class UserController {
 		return "redirect:/test";
 	}
 
-//	@RequestMapping(value = "test", method = RequestMethod.GET)
-//	public void loginGET(@ModelAttribute("dto") LoginVO dto) {
-//		logger.info("로그인 GET 실행");
-//	}
-
 	@RequestMapping(value = "login-post", method = RequestMethod.POST)
 	public String loginPOST(LoginVO dto, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 		

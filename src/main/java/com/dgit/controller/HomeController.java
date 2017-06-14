@@ -23,7 +23,6 @@ import com.dgit.service.BookingService;
 import com.dgit.service.RoomService;
 import com.dgit.service.UserService;
 
-
 @Controller
 @RequestMapping("/*")
 public class HomeController {
@@ -49,22 +48,33 @@ public class HomeController {
 		model.addAttribute("maxperson", Maxperson);
 	}
 
-
-
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
-	public void mypageGET(LoginVO dto,Model model, HttpServletRequest request) throws Exception {
+	public void mypageGET(LoginVO dto, Model model, HttpServletRequest request) throws Exception {
 
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("userVO", uservice.selectuser(id));
 
-//		model.addAttribute("myinfo", uservice.selectmypage(id));
-//		int rno = bservice.selectrno(id);
-//		model.addAttribute("roominfo", rservice.selectfromrno(rno));
-//		model.addAttribute("roominfo", rservice.selectbook(id));
-		model.addAttribute("mybook",bservice.selectbookfromid(id));
-		
+		// model.addAttribute("myinfo", uservice.selectmypage(id));
+		// int rno = bservice.selectrno(id);
+		// model.addAttribute("roominfo", rservice.selectfromrno(rno));
+		// model.addAttribute("roominfo", rservice.selectbook(id));
+		model.addAttribute("mybook", bservice.selectbookfromid(id));
+
 		model.addAttribute("END", rservice.selectEND(id));
 	}
-	
+
+	@RequestMapping(value = "adminpage", method = RequestMethod.GET)
+	public void adminpageGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
+		rservice.selectADMIN();
+		model.addAttribute("ADMIN", rservice.selectADMIN());
+
+	}
+
+	@RequestMapping(value = "CalendarExam2", method = RequestMethod.GET)
+	public void ad(Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		model.addAttribute("ADMIN", rservice.selectADMIN());
+	}
+
 }

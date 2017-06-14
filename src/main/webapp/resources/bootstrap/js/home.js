@@ -73,15 +73,21 @@ $(function() {
 		$("#addroom-wrap").slideToggle(1000)
 	})
 	/* 시설삭제 */
-	$(".deleteroom").click(function() { // 삭제시 form이 들고있는 bno도 가져감
-		$("#f").attr("action", "deleteroom")
-		$("#f").submit()
-	})
+	var delroom = $(".deleteroom")
+	for (var i = 1; i < delroom.length; i++) {
+	//	var idx = $(".deleteroom").eq(i).val()
+		$(".deleteroom").eq(i).click(function() { // 삭제시 form이 들고있는 bno도  가져감
+			console.log($(this).val())
+			var t = $(this).val()
+		//	$(".f").eq(idx).attr("action", "deleteroom") 
+			$(".f").eq(t).submit()
+		})
+	}
 
 	/* 클릭하면 수정화면에 정보넣기 */
 	$(".updateroom1").each(function(i) {
 		$(this).click(function(e) {
-			$("#modroom-wrap").slideDown(1000).css("display","block")
+			$("#modroom-wrap").slideDown(1000).css("display", "block")
 			e.preventDefault();
 			var rno = $(this).val()
 			var r_name = $(".r_name").eq(i).text()
@@ -100,7 +106,7 @@ $(function() {
 					$("form[name='f3'] input[name='people']").val(r_people)
 					$("form[name='f3'] input[name='price']").val(r_price)
 					$("form[name='f3'] textarea").text(r_content)
-					
+
 				},
 				error : function() {
 					alert("에러")
@@ -123,7 +129,7 @@ $(function() {
 	$("#dropout").click(function(e) {
 		e.preventDefault();
 		var sessionID = $("#session-id").val()
-		if(confirm("정말탈퇴하시겠습니까?")){
+		if (confirm("정말탈퇴하시겠습니까?")) {
 			$.ajax({
 				url : "dropout",
 				dataType : "text",
@@ -131,7 +137,7 @@ $(function() {
 				type : "get",
 				success : function() {
 					alert("탈퇴완료")
-					self.location="test"
+					self.location = "test"
 				},
 				error : function() {
 					alert("탈퇴실패")
@@ -139,81 +145,71 @@ $(function() {
 			})
 		}
 	})
-	
+
 	/* ㅇㅖ약 ->예약취소 */
-	$(".btn-state").each(function(i){
+	$(".btn-state").each(function(i) {
 		var bno = $(".bno-input").eq(i).val()
-		if($(".btn-state").eq(i).text() == "예약"){
-			$(".btn-state").eq(i).mouseover(function(){
-				$(".btn-state").eq(i).text("예약취소").click(function(){
-					if(confirm("예약을 취소하시겠습니까?")){
-						/* 예약취소 ajax */
+		if ($(".btn-state").eq(i).text() == "예약") {
+			$(".btn-state").eq(i).mouseover(function() {
+				$(".btn-state").eq(i).text("예약취소").click(function() {
+					if (confirm("예약을 취소하시겠습니까?")) {
 						$.ajax({
-							url:"changeState",
-							dataType:"text",
-							data : {"bno":bno},
+							url : "changeState",
+							dataType : "text",
+							data : {"bno" : bno},
 							type : "get",
-							success:function(){
-								$('#reservation').load(document.URL + ' #reservation .container');
-							}
-						})
-					}
+							success : function() {
+								$('#reservation').load(document.URL+ ' #reservation .container');
+								}
+							})
+						}
+					})
 				})
-			})
-			$(".btn-state").eq(i).mouseout(function(){
+			$(".btn-state").eq(i).mouseout(function() {
 				$(".btn-state").eq(i).text("예약")
 			})
 		}
-		if($(".btn-state").eq(i).text() == "예약취소"){
-		//	$(".tr-color").eq(i).css("background-color","rgba(128,171,187,0.15)")
-		//	$(".tr-color").eq(i).css("color","gray")
-			$(".tr-color").eq(i).css("opacity","0.4")
+		if ($(".btn-state").eq(i).text() == "예약취소") {
+			// $(".tr-color").eq(i).css("background-color","rgba(128,171,187,0.15)")
+			// $(".tr-color").eq(i).css("color","gray")
+			$(".tr-color").eq(i).css("opacity", "0.4")
 		}
 	})
-	
+
 	/* 회원정보 수정할때 비밀번호 */
 	$("form[name='f5']").submit(function() {
 		if ($("#upw0").val() != $("#upw").val()) {
 			var $next = $("#upw").nextAll(".checkpw").eq(0)
 			$next.css("display", "inline")
 			return false
-		}else if($("#default_pw").val() != $("#default_pw2").val()){
+		} else if ($("#default_pw").val() != $("#default_pw2").val()) {
 			var $next2 = $("#default_pw2").nextAll(".default_checkpw").eq(0)
 			$next2.css("display", "inline")
 			return false
 		}
 	})
-	
+
 	/* 비밀번호 수정화면 */
 	$("#chPW").click(function(e) {
 		e.preventDefault();
 		$("#member-pw-update-wrap").slideToggle(1000)
 	})
-	
+
 	/* 회원정보 수정화면 */
 	$("#updatemem").click(function(e) {
 		e.preventDefault();
 		$("#member-info-update-wrap").slideToggle(1000)
 	})
-	
+
 	/* mypage에서 버튼에 마우스올리면 */
-	$("#mypage button").each(function(i){
-		$("#mypage button").eq(i).mouseover(function(){
-			$(this).css("color","red")
+	$("#mypage button").each(function(i) {
+		$("#mypage button").eq(i).mouseover(function() {
+			$(this).css("color", "red")
 		})
-		$("#mypage button").eq(i).mouseout(function(){
-			$(this).css("color","#f05f40")
+		$("#mypage button").eq(i).mouseout(function() {
+			$(this).css("color", "#f05f40")
 		})
 	})
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	cal()
+
 })

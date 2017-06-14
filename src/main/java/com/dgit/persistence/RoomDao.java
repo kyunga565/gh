@@ -28,4 +28,6 @@ public interface RoomDao {
 	
 	List<Booking_Room> selectEND(String id) throws Exception;
 
+	List<Booking_Room> selectADMIN() throws Exception;
+
 }

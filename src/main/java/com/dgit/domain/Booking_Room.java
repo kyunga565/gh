@@ -1,5 +1,6 @@
 package com.dgit.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Booking_Room {	 
@@ -86,6 +87,13 @@ public class Booking_Room {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Booking_Room [bno=" + bno + ", rno=" + rno + ", person=" + person + ", uid=" + uid + ", roomname="
+				+ roomname + ", price=" + price + ", people=" + people + ", content=" + content + ", files="
+				+ Arrays.toString(files) + ", startdate=" + startdate + ", enddate=" + enddate + ", state=" + state
+				+ "]";
 	}
 	
 	

@@ -115,5 +115,18 @@ public class RoomServiceImpl implements RoomService {
 		
 	}
 
+	@Override
+	public List<Booking_Room> selectADMIN() throws Exception {
+
+		List<Booking_Room> vo = dao.selectADMIN();
+
+		for (int i = 0; i < dao.selectADMIN().size(); i++) {
+			List<String> files = dao.getAttach(vo.get(i).getRno());
+			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+		}
+		return vo;
+		
+	}
+
 
 }

@@ -99,11 +99,19 @@ var dateFormat = "yy/mm/dd",
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                 <% if(session.getAttribute("id") != null ){ %>
+              <%--    <% if(session.getAttribute("id")== ("admin")){ %> --%>
+                 <c:if test="${id == 'admin'}">
                  	<li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id") %> 님 반갑습니다!</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage" style="color:#f05f40"> <%=session.getAttribute("id")%></a>
                     </li>
-                 <%} %>
+                 </c:if>
+                  <c:if test="${id != 'admin' && id != null}">
+              <%--    <%}else if(session.getAttribute("id") != null && !session.getAttribute("id").equals("admin")){ %> --%>
+                 	<li>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id")%> 님 반갑습니다! </a>
+                    </li>
+              <%--    <%}%> --%>
+             	 </c:if>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
                     </li>
@@ -531,13 +539,12 @@ var dateFormat = "yy/mm/dd",
 						</p>
 						<p class="r_content">${i.content }</p> <!-- class="btn-room" -->
 						
-						<button class="updateroom1" style="border:1px solid #d2e1e7;padding:10px; 
-						margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; 
-						font-size: 12px;font-weight: bold;" value="${i.rno }">수정</button> 
+						<button class="updateroom1" value="${i.rno }">수정</button> 
+						<button class="deleteroom" value="${i.rno }">삭제</button>
 						
-						<button class="deleteroom" style="border:1px solid #d2e1e7;padding:10px; 
-						margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; 
-						font-size: 12px;font-weight: bold;" value="${i.rno }">삭제</button>
+						<form action="deleteroom" method="post" class="f">
+						 	<input type="hidden" value=" ${i.rno}" name="rno"/> 
+						</form>
 						
 						<br><br><br>
 					</div>
@@ -571,12 +578,10 @@ var dateFormat = "yy/mm/dd",
 
 
    
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
 </body>
-
 </html>

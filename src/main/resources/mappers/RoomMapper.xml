@@ -57,6 +57,10 @@
 		select * from bookroom where uid = #{uid} order by bno desc
 	</select>
 
+	<select id="selectADMIN" resultType="Booking_Room">
+		select * from bookroom order by bno desc
+	</select>
+
 
 
 

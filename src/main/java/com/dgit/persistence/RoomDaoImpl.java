@@ -88,4 +88,9 @@ public class RoomDaoImpl implements RoomDao {
 		return session.selectList(namespace + ".selectEND", id);
 	}
 
+	@Override
+	public List<Booking_Room> selectADMIN() throws Exception {
+		return session.selectList(namespace + ".selectADMIN");
+	}
+
 }

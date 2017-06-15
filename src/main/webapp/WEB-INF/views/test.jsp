@@ -9,51 +9,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/creative.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
 <!-- 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
 -->
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
 <script type="text/javascript">
-var result = '${result}'
-if (result == "success") {
-	alert("회원가입에 성공하였습니다.")
-	$("#join-wrap").slideToggle(1000)
-}
-var logout = '${logout}'
-if (logout == "success") {
-	alert("로그아웃되었습니다.")
-}
-var addrm = '${insertroom}'
-if (addrm == "success") {
-	alert("시설이 등록되었습니다.")
-}
-var error = '${error}' 
-if (error == "o") { 
- alert("성공적으로 로그인되었습니다.") 
-} else if (error == "x") { 
-	alert("아이디 또는 비밀번호를 확인하세요")
-} 
-var delroom = '${delroom}'
-if (delroom == "success") {
-	alert("시설이 삭제되었습니다.")
-}
-var book = '${book}'
-if (book == "success") {
-	alert("예약에 성공하였습니다.")/* 마이페이지로 이동하시겟습니까?  */
-}
 $(function(){
 var dateFormat = "yy/mm/dd",
      from = $( "#from" ).datepicker({
@@ -151,7 +125,23 @@ var dateFormat = "yy/mm/dd",
                 <p>저희 D.D.D는 명덕역 도보 1-5분거리 동성로  · 수성못  및  모든지역 10-20분 거리의 최고의 장소에 위치하였습니다. 
                 	대구 중심에 위치한 D.D.D에서 전국 각지의 Backpacker 들과 PARTY를 즐기며 소중한 추억을 만들어 보세요.</p>
                 <a href="#about" class="btn btn-primary btn-xl page-scroll">Infomation</a>
-                <a href="#" id="gobook2" class="btn btn-primary btn-xl page-scroll">Reservation</a>
+                <c:if test="${id == null}">
+                	<a href="#" id="go" class="btn btn-primary btn-xl page-scroll">Reservation</a>
+                	<script>
+	                	$("#go").click(function(){
+	                		swal({
+	                		  title:"로그인 후 이용가능합니다.",
+	              			  confirmButtonText: "확인",
+	              			  closeOnConfirm: true
+	              			},function(){
+	              				$("#login-wrap").slideToggle(1000)
+	              			})
+	                	})
+                	</script>
+                </c:if>
+                <c:if test="${id != null}">
+                	<a href="#" id="gobook2" class="btn btn-primary btn-xl page-scroll">Reservation</a>
+                </c:if>
             </div>
         </div>
 
@@ -274,18 +264,35 @@ var dateFormat = "yy/mm/dd",
 						지하 카페는 08시부터 00시까지 이용이 가능합니다.<br> 
 						옥상은 00시 이후 출입을 금합니다.<br>
 					</p>
-					<a href="" class="page-scroll btn btn-default btn-xl sr-button" id="gobook">예약하기!</a>
+					
+					<c:if test="${id == null}">
+                		<a href="#" class="page-scroll btn btn-default btn-xl sr-button" id="go2">예약하기!</a>
+	                	<script>
+		                	$("#go2").click(function(){
+		                		 swal({
+		                		  title:"로그인 후 이용가능합니다.",
+		              			  confirmButtonText: "확인",
+		              			  closeOnConfirm: true
+		              			},function(){
+		              				$("#login-wrap").slideToggle(1000)
+		              			}) 
+		                	})
+	                	</script>
+                	</c:if>
+					<c:if test="${id != null }">
+						<a href="" class="page-scroll btn btn-default btn-xl sr-button" id="gobook">예약하기!</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	
-	<form action="" method="post" id="f">
+<%-- 	<form action="" method="post" id="f">
 		<c:forEach var="i" items="${roomVO }">
 	 		<input type="hidden" value=" ${i.rno}" name="rno"/> &nbsp;&nbsp; 
 	 	</c:forEach>
-	</form>
+	</form> --%>
 
 	
 	
@@ -331,21 +338,21 @@ var dateFormat = "yy/mm/dd",
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-heart text-primary sr-icons"></i><br>
+                        <i class="fa fa-4x fa-paper-plane text-primary sr-icons"></i><br>
                         <h3>SECURE ACCESS</h3>
                         <p class="text-muted"><img src="${pageContext.request.contextPath}/resources/bootstrap/img/padlock.png" width="100px"></p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-heart text-primary sr-icons"></i><br>
+                        <i class="fa fa-4x fa-diamond text-primary sr-icons"></i><br>
                         <h3>CLEANING</h3>
                         <p class="text-muted"><img src="${pageContext.request.contextPath}/resources/bootstrap/img/wiping.png" width="100px"></p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-heart text-primary sr-icons"></i><br>
+                        <i class="fa fa-4x fa-newspaper-o text-primary sr-icons"></i><br>
                         <h3>ACTIVITIES</h3>
                         <p class="text-muted"><img src="${pageContext.request.contextPath}/resources/bootstrap/img/wine.png" width="100px"></p>
                     </div>
@@ -470,7 +477,9 @@ var dateFormat = "yy/mm/dd",
             <div class="call-to-action">
                 <h2>객실정보가 궁금하다면 ? </h2>
                 <a href="" class="btn btn-default btn-xl sr-button" id="roominfo">객실정보 상세히보기</a> &nbsp;&nbsp;
-                <a href="" class="btn btn-default btn-xl sr-button" id="roomadd">객실등록하기(admin)</a>
+                  <c:if test="${id == 'admin'}">
+                	<a href="" class="btn btn-default btn-xl sr-button" id="roomadd">객실등록하기(admin)</a>
+                  </c:if>
             </div>
         </div>
     </aside>
@@ -538,10 +547,27 @@ var dateFormat = "yy/mm/dd",
 							인당 - <span class="r_price"><fmt:formatNumber pattern="###,###">${i.price }</fmt:formatNumber></span>원 <br><br>
 						</p>
 						<p class="r_content">${i.content }</p> <!-- class="btn-room" -->
-						
-						<button class="updateroom1" value="${i.rno }">수정</button> 
-						<button class="deleteroom" value="${i.rno }">삭제</button>
-						
+						 <c:if test="${id == 'admin'}">
+							<button class="updateroom1" value="${i.rno }">수정</button> 
+							<button class="deleteroom" value="${i.rno }">삭제</button>
+						</c:if>
+						<c:if test="${id != 'admin' && id != null }">
+							<button class="bookroom" value="${i.rno }">예약하기</button>
+						</c:if>
+						<c:if test="${id == null }">
+							<button id="broom" value="${i.rno }">예약하기</button>
+			                	<script>
+				                	$("#broom").click(function(){
+				                		swal({
+				                		  title:"로그인 후 이용가능합니다.",
+				              			  confirmButtonText: "확인",
+				              			  closeOnConfirm: true
+				              			},function(){
+				              				$("#login-wrap").slideToggle(1000)
+				              			})
+				                	})
+			                	</script>
+							</c:if>
 						<form action="deleteroom" method="post" class="f">
 						 	<input type="hidden" value=" ${i.rno}" name="rno"/> 
 						</form>
@@ -578,6 +604,47 @@ var dateFormat = "yy/mm/dd",
 
 
    
+<script type="text/javascript">
+if ('${result}' == "success") {
+	swal("Join Success!")
+	$("#join-wrap").slideToggle(1000)
+}
+if ('${logout}' == "success") {
+	swal({
+		title:"LogOut Success!",
+		type:"success",
+		timer:1000,
+		showConfirmButton: false
+	}) 
+}
+if ('${insertroom}' == "success") {
+	swal("시설이 등록되었습니다.")
+}
+var error = '${error}' 
+if (error == "o") { 
+	swal({
+		title:"Login Success!",
+		type:"success",
+		timer:1000,
+		showConfirmButton: false,
+	}) 
+} else if (error == "x") { 
+	swal("ERROR","아이디 또는 비밀번호를 확인하세요","error")
+} 
+if ('${delroom}' == "success") {
+	swal("Delete Success!")
+}
+if ('${book}' == "success") {
+	swal({
+		title:"Reservation Success!",
+		showCancelButton: true,
+		type:"info",
+		text:"마이페이지로 이동하시겠습니까?"	
+	},function(){
+		self.location="mypage"
+	})/*  */
+}
+</script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>

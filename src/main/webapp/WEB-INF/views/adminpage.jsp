@@ -8,14 +8,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/creative.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
+
+<!-- datepicker -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
 </head>
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -65,18 +68,14 @@
     </nav>
   <br><br><br>
       
-    
-	<input type="hidden" id="session-id" value="<%=session.getAttribute("id") %>" />
-		
-		
+  	
 		
 <div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
-	
 	<section id="admin_reservation">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">RESERVATION LIST</h2><a href="${pageContext.request.contextPath}/CalendarExam2">달력으로보기</a>
+                    <h2 class="section-heading">RESERVATION LIST</h2><a href="${pageContext.request.contextPath}/adminpage_cal">달력으로보기</a>
                     <hr class="primary">
                 </div>
             </div>
@@ -85,7 +84,7 @@
             <div class="row">
 				<div class="text-center">
 					<div style="margin: 5px auto 0; width: 95%;">
-						<table id="mypagetable" style="border:2px dotted #d2e1e7;width:100%;">
+						<table id="admin_mypagetable" style="border:2px dotted #d2e1e7;width:100%;">
 	 						<c:forEach items="${ADMIN }" var="m">
 								<tr style="border:2px dotted #d2e1e7;" class="tr-color" >
 									<input type="hidden" value="${m.bno }" class="bno-input" />
@@ -95,10 +94,30 @@
 											<img src="displayFile?filename=${pic }" style="width: 200px; height: 120px;" /><br>
 										</c:forEach>
 									</td>
-									<td><b>< ${m.roomname } ></b><br>${m.content }</td>
-									<td>${m.person }명 / 총금액<br><b><fmt:formatNumber pattern="###,###"> ${m.price*m.person }</fmt:formatNumber></b> 원 </td>  
-									<td><b><fmt:formatDate value="${m.startdate}" /> ~ <fmt:formatDate value="${m.enddate}" /></b></td>
-									<td style="width:100px;"><button class="btn-state">${m.state}</button></td>
+									<td width="310px;"><b>< ${m.roomname } ></b><br>${m.content }</td>
+									<td><span class="person_admin">
+										${m.person }명 / 총금액<br><b><fmt:formatNumber pattern="###,###"> ${m.price*m.person }</fmt:formatNumber></b> 원 
+									</span>
+									<span class="person_admin_update" style="display: none;">
+										<input type="number" value="${m.person }"  />명
+									</span>
+									</td>  
+									
+									<td><b class="date_admin"><fmt:formatDate value="${m.startdate}" /> ~ 
+										<fmt:formatDate value="${m.enddate}" /></b>
+										<span class="date_admin_update" style="display: none;">
+											<input type="text" class="from2" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${m.startdate }"/>'/><br>
+											<input type="text" class="to2" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${m.enddate }"/>'/>
+										</span>
+									</td>
+									<td style="width:100px;">
+										<p class="btn-state-admin">${m.state}</p>
+										<select name="" class="state-admin" style="display: none;">
+											<option value="예약">예약</option>
+											<option value="예약취소">예약취소</option>
+										</select>
+									</td>
+									<td style="width:100px;"><button value="${m.bno }" class="btn-state-update">수정하기</button></td>
 								</tr>
 							</c:forEach>		
 						</table>
@@ -131,17 +150,52 @@
     </section>
 
 
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <!-- Theme JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
 
+<!-- datepicker -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+$(function(){
+var dateFormat = "yy/mm/dd",
+     from = $( ".from2" ).datepicker({
+         defaultDate: "+1w",
+         changeMonth: true,
+         minDate:"0",
+         onClose:function(selDate){
+       	  to.datepicker( "option", "minDate", selDate );
+         },
+         numberOfMonths: 1
+       }),
+     to = $( ".to2" ).datepicker({
+       defaultDate: "+1w",  
+       changeMonth: true,
+       numberOfMonths: 1
+     }).on( "change", function() {
+       from.datepicker( "option", "maxDate", getDate( this ) );
+     });
+
+   function getDate( element ) {
+     var date;
+     try {
+       date = $.datepicker.parseDate( dateFormat, element.value );
+     } catch( error ) {
+       date = null;
+     }
+
+     return date;
+   }
+})
+</script>
 </body>
-
 </html>

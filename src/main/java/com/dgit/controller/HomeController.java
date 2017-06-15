@@ -71,10 +71,16 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "CalendarExam2", method = RequestMethod.GET)
+	@RequestMapping(value = "adminpage_cal", method = RequestMethod.GET)
 	public void ad(Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
 		model.addAttribute("ADMIN", rservice.selectADMIN());
 	}
+	@RequestMapping(value = "CalendarExam", method = RequestMethod.GET)
+	public void ad2(Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		model.addAttribute("ADMIN", rservice.selectADMIN());
+	}
+
 
 }

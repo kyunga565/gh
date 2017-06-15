@@ -6,23 +6,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/creative.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
 </head>
-<script type="text/javascript">
-var logout = '${changePW}'
-if (logout == "success") {
-	alert("비밀번호가 정상적으로 변경되었습니다.")
-}
-</script>
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -223,17 +220,19 @@ if (logout == "success") {
     </section>
 
 
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <!-- Theme JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
-
+   
+<script type="text/javascript">
+var logout = '${changePW}'
+if (logout == "success") {
+	swal("비밀번호가 변경되었습니다.")
+}
+</script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
 </body>
-
 </html>

@@ -73,17 +73,22 @@ $(function() {
 		$("#addroom-wrap").slideToggle(1000)
 	})
 	/* 시설삭제 */
-	var delroom = $(".deleteroom")
-	for (var i = 1; i < delroom.length; i++) {
-	//	var idx = $(".deleteroom").eq(i).val()
-		$(".deleteroom").eq(i).click(function() { // 삭제시 form이 들고있는 bno도  가져감
-			console.log($(this).val())
-			var t = $(this).val()
-		//	$(".f").eq(idx).attr("action", "deleteroom") 
-			$(".f").eq(t).submit()
+	$(".deleteroom").each(function(i,obj){
+		$(".deleteroom").eq(i).click(function(){
+			swal({
+			  title:"해당 시설을 삭제하시겠습니까?",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes",
+			  closeOnConfirm: true
+			},function(){
+				$(".f").eq(i).submit()
+			})
 		})
-	}
+	});
 
+	
 	/* 클릭하면 수정화면에 정보넣기 */
 	$(".updateroom1").each(function(i) {
 		$(this).click(function(e) {
@@ -129,50 +134,66 @@ $(function() {
 	$("#dropout").click(function(e) {
 		e.preventDefault();
 		var sessionID = $("#session-id").val()
-		if (confirm("정말탈퇴하시겠습니까?")) {
+		swal({
+			  title: "정말 탈퇴하시겠습니까?",
+			  text: "탈퇴시 회원정보는 모두 사라집니다.",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes",
+			  closeOnConfirm: true
+		},function(){
 			$.ajax({
 				url : "dropout",
 				dataType : "text",
 				data : sessionID,
 				type : "get",
 				success : function() {
-					alert("탈퇴완료")
+					swal("탈퇴완료!","정상적으로 탈퇴되었습니다.","success");
 					self.location = "test"
 				},
 				error : function() {
 					alert("탈퇴실패")
 				}
 			})
-		}
+		})
 	})
 
 	/* ㅇㅖ약 ->예약취소 */
 	$(".btn-state").each(function(i) {
 		var bno = $(".bno-input").eq(i).val()
+		if ($(".btn-state").eq(i).text() == "예약취소") {
+			$(".tr-color").eq(i).css("opacity", "0.4")
+		}
 		if ($(".btn-state").eq(i).text() == "예약") {
 			$(".btn-state").eq(i).mouseover(function() {
 				$(".btn-state").eq(i).text("예약취소").click(function() {
-					if (confirm("예약을 취소하시겠습니까?")) {
-						$.ajax({
-							url : "changeState",
-							dataType : "text",
-							data : {"bno" : bno},
-							type : "get",
-							success : function() {
-								$('#reservation').load(document.URL+ ' #reservation .container');
-								}
-							})
-						}
+				swal({
+					title: "예약취소",
+					text: "해당 예약을 취소 하시겠습니까?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes",
+					closeOnConfirm: true
+				},function(){
+					$.ajax({
+						url : "changeState",
+						dataType : "text",
+						data : {"bno" : bno},
+						type : "get",
+						success : function() {
+						//	$('#reservation').load(document.URL+ ' #reservation .container');
+
+							self.location="mypage"
+							}
+						})
 					})
 				})
+			})
 			$(".btn-state").eq(i).mouseout(function() {
 				$(".btn-state").eq(i).text("예약")
 			})
-		}
-		if ($(".btn-state").eq(i).text() == "예약취소") {
-			// $(".tr-color").eq(i).css("background-color","rgba(128,171,187,0.15)")
-			// $(".tr-color").eq(i).css("color","gray")
-			$(".tr-color").eq(i).css("opacity", "0.4")
 		}
 	})
 
@@ -210,6 +231,36 @@ $(function() {
 			$(this).css("color", "#f05f40")
 		})
 	})
-	cal()
+	/* subroom에서 ㅇㅖ약하기 버튼 누르면 */
+	$(".bookroom").each(function(i){
+		$(".bookroom").eq(i).click(function(){
+			var rno = $(this).val()
+			$("#book-wrap select[name='rno']").val(rno)
+			$("#book-wrap").slideToggle(1000)
+		
+		})
+	})
+	
+	
+	$(".btn-state-update").each(function(i) {
+		$(".btn-state-update").eq(i).mouseover(function() {
+			$(this).css("color","red").click(function(){
+				$(".date_admin_update").eq(i).css("display","block")
+				$(".date_admin").eq(i).css("display","none")
+				
+				$(".person_admin_update").eq(i).css("display","block")
+				$(".person_admin").eq(i).css("display","none")
+				
+				$(".state-admin").eq(i).css("display","block")
+				$(".btn-state-admin").eq(i).css("display","none")
+				
+				$(".btn-state-update").eq(i).text("수정완료")
+			})
+		})
+		$(".btn-state-update").eq(i).mouseout(function() {
+			$(this).css("color","#f05f40")
+		})
+	})
 
 })
+

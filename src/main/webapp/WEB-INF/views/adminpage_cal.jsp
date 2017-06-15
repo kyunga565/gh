@@ -15,6 +15,7 @@
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/creative.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style type="text/css">
 #calendar {
@@ -129,6 +130,7 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/bootstrap/js/moment.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/fullcalendar.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
 <script>
 $(function(){
 	$('#calendar').fullCalendar({
@@ -140,20 +142,58 @@ $(function(){
 		defaultDate: new Date(),
 		navLinks: true,
 		defaultValue: "month",
+		selectable: true,
 		monthNames:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
 		monthNamesShort:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
 		dayNames:["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
 		dayNamesShort: ["일","월","화","수","목","금","토"],
 		buttonText:{today:"오늘",month:"월별",week:"주별",day:"일별"},
 		eventLimit: true,
-		events: [
-			<c:forEach items="${ADMIN }" var="a">
-				{content : '${a.state}',title: '${a.uid} / ${a.roomname} / ${a.state}',start: '<fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" />',end:'<fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />'},
+			  selectable : true,
+			  selectHelper : true,
+			  select : function(start,end) {
+			  swal({
+			 	title:"예약하시겠습니까?",
+				text: start.format()+" ~ " + end.format(),
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes",
+				  closeOnConfirm: true  
+			   },function(){
+				   
+			   })
+			  },
+ /* 		events:[
+			<c:forEach items='${ADMIN }' var='a'>
+				{content : '${a.uid} / ${a.person}명 / ${a.state}',title: '${a.roomname} 
+				(${a.state})',start: '<fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" />',end:'<fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />'},
 			</c:forEach>
-				{title:"test",start:'2017-06-07',end:'2017-06-09',content:"z"}
-		],
-		eventClick:function(event){
-			alert(event.content)
+				{title:"예약",start:'2017-06-28',end:'2017-07-02',content:"z",color: '#ff9f89'}
+			],  
+*/
+		events: [
+            <c:forEach var="a" items="${ADMIN}">
+			{
+			  title: '${a.roomname} (${a.state})',
+			  content :'${a.uid} / ${a.person}명 / ${a.state} /'+
+			  ' <fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" /> ~'+
+			  ' <fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />',
+			  start: '<fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" />',
+			  end:'<fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />'
+			  <c:choose>
+			      <c:when test="${a.state=='예약취소'}">,color : '#cdcdcd'</c:when>
+			      <c:when test="${a.state=='예약'}">,color : '#f0634b'</c:when>
+			      <c:otherwise>,color : '#f0634b' </c:otherwise>
+			  </c:choose>
+			},
+            </c:forEach>
+            ],
+		eventClick:function(e){
+			swal({
+				title:"예약정보",
+				text:"<span style='color:#F8BB86'>"+e.content+"</span>",
+				html:true
+			})
 		}
 	})
 })

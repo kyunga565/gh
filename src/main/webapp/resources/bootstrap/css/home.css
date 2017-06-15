@@ -43,8 +43,11 @@ form[name='f2'] #contents{ margin: 0 auto;border:2px solid #d2e1e7;  border-radi
 
 form[id='booking'] select{ width: 250px;border:2px solid #d2e1e7;height: 35px;border-radius:5px;}
 
-
 .btn-state{border:1px solid #d2e1e7; padding:10px; margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}
+
+.btn-state-admin{padding:10px; margin:10px; color:#f05f40; font-size: 12px;font-weight: bold;}
+
+.btn-state-update{border:1px solid #d2e1e7; padding:10px; margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}
 
 
 #member-pw-update-wrap{color:black;position: absolute;background-color:#f9f9f9;display:none;
@@ -68,6 +71,23 @@ form[id='booking'] select{ width: 250px;border:2px solid #d2e1e7;height: 35px;bo
 .updateroom1{border:1px solid #d2e1e7;padding:10px; 
 						margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; 
 						font-size: 12px;font-weight: bold;}
+
+
+.bookroom , #broom{border:1px solid #d2e1e7;padding:10px; 
+						margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; 
+						font-size: 12px;font-weight: bold;}
+
+.date_admin_update input[type='text']{border:2px solid #d2e1e7; width:160px;height: 30px; border-radius:5px;}
+
+.person_admin_update input[type='number']{border:2px solid #d2e1e7; width:50px;height: 30px; border-radius:5px;}
+
+.state-admin{ width: 80px;border:2px solid #d2e1e7;height: 30px;border-radius:5px;}
+
+
+
+
+
+
 
 
 

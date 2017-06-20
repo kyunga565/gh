@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dgit.domain.BookingVO;
+import com.dgit.domain.Criteria;
 import com.dgit.domain.LoginVO;
+import com.dgit.domain.PageMaker;
 import com.dgit.domain.RoomVO;
 import com.dgit.domain.UserVO;
 import com.dgit.interceptor.LoginInterceptor;
@@ -37,7 +39,7 @@ public class HomeController {
 	@Inject
 	private BookingService bservice;
 
-	@RequestMapping(value = "test", method = RequestMethod.GET)
+	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public void roomviewGET(@ModelAttribute("dto") LoginVO dto, Model model) throws Exception {
 		model.addAttribute("roomVO", rservice.selectAll());
 		int Nextrno = rservice.nextrno();
@@ -58,9 +60,16 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "adminpage", method = RequestMethod.GET)
-	public void adminpageGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-		rservice.selectADMIN();
-		model.addAttribute("ADMIN", rservice.selectADMIN());
+	public void adminpageGET(@ModelAttribute("cri") Criteria cri,Model model, HttpServletRequest request, HttpSession session) throws Exception {
+		
+	//	model.addAttribute("ADMIN", rservice.selectADMIN());
+		
+		/* 페이징 */
+		model.addAttribute("ADMIN", rservice.listCriteria(cri));
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		pm.setTotalCount(rservice.countPaging(cri));
+		model.addAttribute("pageMaker", pm);
 
 	}
 
@@ -69,15 +78,11 @@ public class HomeController {
 		model.addAttribute("ADMIN", rservice.selectADMIN());
 	}
 	
-	@RequestMapping(value = "CalendarExam", method = RequestMethod.GET)
-	public void ad2(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-		model.addAttribute("ADMIN", rservice.selectADMIN());
-	}
 
 
 	@RequestMapping(value = "mypage_cal", method = RequestMethod.GET)
 	public void mypage_calGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-		model.addAttribute("MYPAGE", rservice.selectMYPAGE());
+	//	model.addAttribute("MYPAGE", rservice.selectMYPAGE());
 		model.addAttribute("roomVO", rservice.selectAll());
 		int Nextrno = rservice.nextrno();
 		model.addAttribute("nextRno", Nextrno);

@@ -15,10 +15,8 @@
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/creative.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
-
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
 </head>
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -27,7 +25,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="${pageContext.request.contextPath}/test">DAYDAY DAEGU</a>
+                <a class="navbar-brand page-scroll" href="${pageContext.request.contextPath}/main">DAYDAY DAEGU</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -39,16 +37,16 @@
                     </li>
                  <%} %>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#about">About</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#services">Services</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#portfolio">Gallery</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Gallery</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#room">Room</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Room</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="">Contact</a>
@@ -128,6 +126,34 @@
 				</div>
 			</div>
 			<div id='calendar'></div>
+			
+			
+			
+			
+			
+
+			<div class="box-footer">
+				<div class="text-center">
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev }">
+							<li><a href="adminpage?page=${pageMaker.startPage-1 }">&laquo;</a></li>
+						</c:if>
+
+						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+							<li ${pageMaker.cri.page == idx? 'class="active"':'' }>
+								<a href="adminpage${pageMaker.makeQuery(idx)}">${idx}</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${pageMaker.next }">
+							<li><a href="adminpage?page=${pageMaker.endPage+1 }">&raquo;</a></li>
+						</c:if>
+					</ul>
+				</div>
+			</div>
+			
+			
+			
         </div>
     </section>
 </div><!-- end of #section-wrap -->

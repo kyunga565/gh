@@ -31,7 +31,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="${pageContext.request.contextPath}/test">DAYDAY DAEGU</a>
+                <a class="navbar-brand page-scroll" href="${pageContext.request.contextPath}/main">DAYDAY DAEGU</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -46,16 +46,16 @@
                     </li>
                  <%} %>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#about">About</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#services">Services</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#portfolio">Gallery</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Gallery</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#room">Room</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Room</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="">Contact</a>
@@ -90,7 +90,7 @@
 				</a>
 			</div>
 			<div class="login-div" style="text-align: center;">
-				<form action="booking" method="post" name="f4" id="booking">
+				<form action="booking_cal" method="post" name="f4" id="booking">
 					<input type="text" name="bno" value="${nextBno }" readonly="readonly"/><br><br>
 					<input type="text" name="uid" value="<%=session.getAttribute("id")%>" readonly="readonly"/><br><br>
 					 

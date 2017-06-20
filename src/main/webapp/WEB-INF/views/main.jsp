@@ -606,12 +606,12 @@ var dateFormat = "yy/mm/dd",
    
 <script type="text/javascript">
 if ('${result}' == "success") {
-	swal("Join Success!")
+	swal("회원가입이 완료되었습니다!")
 	$("#join-wrap").slideToggle(1000)
 }
 if ('${logout}' == "success") {
 	swal({
-		title:"LogOut Success!",
+		title:"로그아웃되었습니다!",
 		type:"success",
 		timer:1000,
 		showConfirmButton: false
@@ -623,7 +623,7 @@ if ('${insertroom}' == "success") {
 var error = '${error}' 
 if (error == "o") { 
 	swal({
-		title:"Login Success!",
+		title:"로그인 성공!",
 		type:"success",
 		timer:1000,
 		showConfirmButton: false,
@@ -632,17 +632,14 @@ if (error == "o") {
 	swal("ERROR","아이디 또는 비밀번호를 확인하세요","error")
 } 
 if ('${delroom}' == "success") {
-	swal("Delete Success!")
+	swal("삭재되었습니다!")
 }
-if ('${book}' == "success") {
+if('${updateroom}' == "success"){
 	swal({
-		title:"Reservation Success!",
-		showCancelButton: true,
-		type:"info",
-		text:"마이페이지로 이동하시겠습니까?"	
-	},function(){
-		self.location="mypage"
-	})/*  */
+		title:"시설이 수정되었습니다!",
+		type:"success",
+		timer:1000
+	}) 
 }
 </script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>

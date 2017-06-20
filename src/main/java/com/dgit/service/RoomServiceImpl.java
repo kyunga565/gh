@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dgit.domain.BookingVO;
 import com.dgit.domain.Booking_Room;
+import com.dgit.domain.Criteria;
 import com.dgit.domain.RoomVO;
 import com.dgit.persistence.RoomDao;
 
@@ -89,7 +90,7 @@ public class RoomServiceImpl implements RoomService {
 		}
 	}
 	
-	@Override
+/*	@Override
 	public List<RoomVO> selectbook(String id) throws Exception {	
 		List<RoomVO> vo = dao.selectbook(id);
 //		List<RoomVO> vo = dao.selectAll();
@@ -100,7 +101,7 @@ public class RoomServiceImpl implements RoomService {
 		}
 		return vo;
 	//	return dao.selectbook(id);
-	}
+	}*/
 
 	@Override
 	public List<Booking_Room> selectEND(String id) throws Exception {
@@ -138,9 +139,26 @@ public class RoomServiceImpl implements RoomService {
 		return dao.selectADMIN_update(bno);
 	}
 
-	@Override
+/*	@Override
 	public List<Booking_Room> selectMYPAGE() throws Exception {
 		return dao.selectMYPAGE();
+	}*/
+
+	@Override
+	public List<Booking_Room> listCriteria(Criteria cri) throws Exception {
+		List<Booking_Room> vo = dao.listCriteria(cri);
+
+		for (int i = 0; i < dao.listCriteria(cri).size(); i++) {
+			List<String> files = dao.getAttach(vo.get(i).getRno());
+			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+		}
+		return vo;
+		
+	//	return dao.listCriteria(cri);
+	}
+	@Override
+	public int countPaging(Criteria cri) throws Exception {
+		return dao.countPaging(cri);
 	}
 
 

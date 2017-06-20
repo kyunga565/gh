@@ -50,10 +50,10 @@
 		delete from file where rno = #{rno}
 	</delete>
 
-	<select id="selectbook" resultType="RoomVO">
+	<!-- <select id="selectbook" resultType="RoomVO">
 		select * from booking b,room
 		r where b.rno = r.rno and uid = #{uid}
-	</select>
+	</select> -->
 
 	<select id="selectEND" resultType="Booking_Room">
 		select * from bookroom where
@@ -81,6 +81,18 @@
 	</select>
 
 
-
+	<!-- 페이징처리 -->
+	<select id="listPage" resultType="Booking_Room">
+		select * from bookroom where bno>0 order by bno desc limit #{page},5
+	</select>
+	<select id="listCriteria" resultType="Booking_Room">
+		select * from bookroom where bno>0 
+		order
+		by bno desc limit #{pageStart},#{perPageNum}
+	</select>
+	<select id="countPaging" resultType="int">
+		select count(bno) from bookroom where bno > 0
+	</select>
+	
 
 </mapper>

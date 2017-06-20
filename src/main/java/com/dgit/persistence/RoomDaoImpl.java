@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dgit.domain.Booking_Room;
+import com.dgit.domain.Criteria;
 import com.dgit.domain.RoomVO;
 
 @Repository
@@ -108,4 +109,23 @@ public class RoomDaoImpl implements RoomDao {
 		return session.selectList(namespace + ".selectMYPAGE");
 	}
 
+	@Override
+	public List<Booking_Room> listPage(int page) throws Exception {
+		if (page >= 0) {
+			page = 1;
+		}
+		page = (page - 1) * 5;
+
+		return session.selectList(namespace + ".listPage", page);
+	}
+
+	@Override
+	public List<Booking_Room> listCriteria(Criteria cri) throws Exception {
+		return session.selectList(namespace + ".listCriteria", cri);
+	}
+
+	@Override
+	public int countPaging(Criteria cri) throws Exception {
+		return session.selectOne(namespace + ".countPaging",cri);
+	}
 }

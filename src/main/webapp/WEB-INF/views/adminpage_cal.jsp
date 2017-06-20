@@ -31,7 +31,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="${pageContext.request.contextPath}/test">DAYDAY DAEGU</a>
+                <a class="navbar-brand page-scroll" href="${pageContext.request.contextPath}/main">DAYDAY DAEGU</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -43,16 +43,16 @@
                     </li>
                  <%} %>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#about">About</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#services">Services</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#portfolio">Gallery</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Gallery</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#room">Room</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/main">Room</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="">Contact</a>
@@ -142,27 +142,12 @@ $(function(){
 		defaultDate: new Date(),
 		navLinks: true,
 		defaultValue: "month",
-/* 		selectable: true, */
 		monthNames:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
 		monthNamesShort:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
 		dayNames:["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
 		dayNamesShort: ["일","월","화","수","목","금","토"],
 		buttonText:{today:"오늘",month:"월별",week:"주별",day:"일별"},
 		eventLimit: true,
-/* 			  selectable : true,
-			  selectHelper : true,
-			  select : function(start,end) {
-			  swal({
-			 	title:"예약하시겠습니까?",
-				text: start.format()+" ~ " + end.format(),
-				  showCancelButton: true,
-				  confirmButtonColor: "#DD6B55",
-				  confirmButtonText: "Yes",
-				  closeOnConfirm: true  
-			   },function(){
-				   
-			   })
-			  }, */
 		events: [
             <c:forEach var="a" items="${ADMIN}">
 			{

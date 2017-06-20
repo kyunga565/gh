@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,8 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dgit.domain.Booking_Room;
 import com.dgit.domain.RoomVO;
-import com.dgit.domain.UserVO;
-import com.dgit.interceptor.LoginInterceptor;
 import com.dgit.service.RoomService;
 import com.dgit.util.MediaUtils;
 import com.dgit.util.UploadFileUtils;
@@ -94,14 +91,14 @@ public class RoomController {
 		// ----------------------------------------------------------------
 		service.insertroom(vo);
 		rttr.addFlashAttribute("insertroom", "success");
-		return "redirect:/test";
+		return "redirect:/main";
 	}
 
 	@RequestMapping(value = "deleteroom", method = RequestMethod.POST)
 	public String roomDelete(int rno, RedirectAttributes rttr) throws Exception {
 		service.deleteroom(rno);
 		rttr.addFlashAttribute("delroom", "success");
-		return "redirect:/test";
+		return "redirect:/main";
 	}
 
 	@RequestMapping(value = "updateroom", method = RequestMethod.POST)
@@ -112,7 +109,6 @@ public class RoomController {
 		r_no.setPrice(vo.getPrice());
 		r_no.setRoomname(vo.getRoomname());
 		r_no.setContent(vo.getContent());
-		// r_no.setFiles(vo.getFiles());
 
 		// 파일업로드--------------------------------------------------------
 		ArrayList<String> filenames = new ArrayList<String>();
@@ -125,25 +121,26 @@ public class RoomController {
 		}
 		String[] sFiles = filenames.toArray(new String[filenames.size()]);
 		r_no.setFiles(sFiles);
-		// vo.setFiles(sFiles);
 		// ----------------------------------------------------------------
 
 		service.update(r_no);
 		System.out.println(r_no.getRno() + "수정완료" + r_no.getFiles());
-		return "redirect:/test";
+
+		rttr.addFlashAttribute("updateroom", "success");
+		return "redirect:/main";
 	}
 
 	@RequestMapping(value = "updatebookroom", method = RequestMethod.POST)
-	public String roombookUPDATE(Booking_Room vo,int bno,HttpSession session) throws Exception {
-		System.out.println("왓슴니당"+vo);
-		Booking_Room br =  service.selectADMIN_update(bno);
-		System.out.println(br);
+	public String roombookUPDATE(Booking_Room vo, int bno, HttpSession session) throws Exception {
+
+		Booking_Room br = service.selectADMIN_update(bno);
 		br.setState(vo.getState());
 		br.setPerson(vo.getPerson());
 		br.setStartdate(vo.getStartdate());
 		br.setEnddate(vo.getEnddate());
-		
+
 		service.updatebookroom(br);
 		return "redirect:/adminpage";
 	}
+
 }

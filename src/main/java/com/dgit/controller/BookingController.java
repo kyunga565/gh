@@ -19,11 +19,19 @@ public class BookingController {
 
 
 	@RequestMapping(value = "booking", method = RequestMethod.POST)
-	public String registerPost(BookingVO vo, RedirectAttributes rttr) throws Exception {
+	public String book_Post(BookingVO vo, RedirectAttributes rttr) throws Exception {
 		service.reservation(vo);
-		rttr.addFlashAttribute("book", "success");// 성공햇다고 alert창 띄울려고
+		rttr.addFlashAttribute("book", "success");
 		System.out.println("예약완료");
-		return "redirect:test";
+		return "redirect:main";
+	}
+
+	@RequestMapping(value = "booking_cal", method = RequestMethod.POST)
+	public String book_cal_Post(BookingVO vo, RedirectAttributes rttr) throws Exception {
+		service.reservation(vo);
+		rttr.addFlashAttribute("book", "success");
+		System.out.println("예약완료");
+		return "redirect:mypage_res";
 	}
 
 	@ResponseBody

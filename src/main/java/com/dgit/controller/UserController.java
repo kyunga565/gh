@@ -41,7 +41,7 @@ public class UserController {
 		logger.info("회원가입POST 실행");
 		service.join(vo);
 		rttr.addFlashAttribute("result", "success");
-		return "redirect:/test";
+		return "redirect:/main";
 	}
 
 	@RequestMapping(value = "login-post", method = RequestMethod.POST)
@@ -57,7 +57,7 @@ public class UserController {
 			session.setAttribute("id", dto.getUid());
 		}
 		model.addAttribute("userDTO", dto);
-		return "redirect:/test";
+		return "redirect:/main";
 	}
 
 	@ResponseBody
@@ -88,14 +88,13 @@ public class UserController {
 
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, RedirectAttributes rttr) throws Exception {
-		String vo = (String) session.getAttribute("id");//, HttpServletResponse response
-		System.out.println(vo + "현재 로그인된 아이디");
+		String vo = (String) session.getAttribute("id");
 		if(vo != null){
 			session.removeAttribute("id");
 			session.invalidate();
 		}
 		rttr.addFlashAttribute("logout", "success");
-		return "redirect:/test";
+		return "redirect:/main";
 	}
 
 	
@@ -123,7 +122,6 @@ public class UserController {
 
 	@RequestMapping(value = "mem_update", method = RequestMethod.POST)
 	public String memUPDATE(UserVO vo,HttpSession session, RedirectAttributes rttr) throws Exception {
-		System.out.println("왓슴니당"+vo);
 		String id = (String) session.getAttribute("id");
 		UserVO user =  service.selectuser2(id);
 		 

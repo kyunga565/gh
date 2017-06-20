@@ -101,7 +101,7 @@ $(function() {
 			var r_price = $(".r_price").eq(i).text()
 
 			$.ajax({
-				url : "test",
+				url : "main",
 				data : rno,
 				type : "get",
 				dataType : "text",
@@ -150,7 +150,7 @@ $(function() {
 				type : "get",
 				success : function() {
 					swal("탈퇴완료!","정상적으로 탈퇴되었습니다.","success");
-					self.location = "test"
+					self.location = "main"
 				},error : function() {
 					alert("탈퇴실패")
 				}
@@ -188,9 +188,7 @@ $(function() {
 						type : "get",
 						success : function() {
 						//	$('#reservation').load(document.URL+ ' #reservation .container');
-						
-							self.location="mypage"
-							
+							self.location="mypage_res"
 							
 							}
 						})
@@ -247,7 +245,7 @@ $(function() {
 		})
 	})
 	
-	
+	/* 관라지가 ㅇㅖ약정보 수정하기 */
 	$(".btn-state-update").each(function(i) {
 		$(".btn-state-update").eq(i).mouseover(function() {
 			$(this).css("color","red").click(function(e){
@@ -262,7 +260,17 @@ $(function() {
 				$(".btn-state-admin").eq(i).css("display","none")
 				
 				$(".btn-state-update").eq(i).text("수정완료").click(function(){
-					$("form[name='f7']").eq(i).submit()
+					swal({
+						title: "수정완료!",
+						type: "success",
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "확인",
+						closeOnConfirm: true
+					},function(){
+						$("form[name='f7']").eq(i).submit()
+					})
+					
+					
 				})
 			})
 		})
@@ -271,20 +279,13 @@ $(function() {
 		})
 	})
 
-if($("#crop").text("▲")){
-	$("#crop").click(function(e){
-		e.preventDefault();
-		$("#mypage_crop").slideUp(500)
-		$("#crop").text("▼")
+
+	$(".btn-state-admin").each(function(i) {
+		if ($(".btn-state-admin").eq(i).text() == "예약종료") {
+			$(".tr-color").eq(i).css("opacity", "0.4")
+		}	
 	})
-}else{
-	$("#crop").click(function(e){
-		e.preventDefault();
-		$("#mypage_crop").slideDown(500)
-		$("#crop").text("▲")
-	})
-}
-			
+	
 			
 
 	

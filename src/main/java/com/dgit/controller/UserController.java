@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dgit.domain.Booking_Room;
 import com.dgit.domain.LoginVO;
 import com.dgit.domain.UserVO;
 import com.dgit.interceptor.LoginInterceptor;
@@ -120,5 +121,18 @@ public class UserController {
 		return "redirect:/mypage";
 	}
 
+	@RequestMapping(value = "mem_update", method = RequestMethod.POST)
+	public String memUPDATE(UserVO vo,HttpSession session, RedirectAttributes rttr) throws Exception {
+		System.out.println("왓슴니당"+vo);
+		String id = (String) session.getAttribute("id");
+		UserVO user =  service.selectuser2(id);
+		 
+		user.setUtel(vo.getUtel());
+		user.setUaddr(vo.getUaddr());
+		service.updatemem(user);
+
+		rttr.addFlashAttribute("changeMEM", "success");
+		return "redirect:/mypage";
+	}
 	
 }

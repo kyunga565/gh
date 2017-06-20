@@ -37,6 +37,9 @@
                  	<li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id") %> 님 반갑습니다!</a>
                     </li>
+                    <li>
+                    	<a class="page-scroll" href="${pageContext.request.contextPath}/mypage_res"> MYreservation </a>
+                    </li>
                  <%} %>
                     <li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/test/#about">About</a>
@@ -103,13 +106,15 @@
 				</a>
 			</div>
 			<div class="member-update-div">
-				<form action="" method="post" name="f6">
+				<form action="mem_update" method="post" name="f6">
+				<c:forEach items="${userVO }" var="i">
 					<input type="text" value="<%=session.getAttribute("id") %>" readonly="readonly"/><br><br>
-					<input type="text" name="uaddr" placeholder="주소"/><br><br>
-					<input type="text" name="utel" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
+					<input type="text" name="uaddr" value="${i.uaddr }" placeholder="주소"/><br><br>
+					<input type="text" name="utel" value="${i.utel }" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
 					<p style="padding-left: 40px;">
 						<button type="submit" class="btn-room"> 회원정보 수정완료  </button>
 					</p>
+				</c:forEach>	
 				</form>
 			</div>
 		</div>
@@ -119,18 +124,18 @@
 	<input type="hidden" id="session-id" value="<%=session.getAttribute("id") %>" />
 		
 		
-		
+
 <div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
-	<section id="mypage">
+<section id="mypage">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">MYPAGE</h2>
+                    <h2 class="section-heading">MYPAGE </h2>
                     <hr class="primary">
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" id="mypage_crop">
             <div class="row">
                 <div class="text-center" style="border:2px dotted #d2e1e7;width:50%;margin:0 auto;">
                     <div style="width:80%;margin:0 auto;padding:40px;">
@@ -162,11 +167,13 @@
         </div>
     </section>
     
-	<section id="reservation">
+	<%-- <section id="reservation">
         <div class="container">
+
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">MY RESERVATION</h2>
+                    <a href="${pageContext.request.contextPath}/mypage_cal">달력으로보기</a>
                     <hr class="primary">
                 </div>
             </div>
@@ -196,7 +203,7 @@
 				</div>
 			</div>
         </div>
-    </section>
+    </section> --%>
 </div><!-- end of #section-wrap -->
    
 	<section id="contact">
@@ -222,9 +229,11 @@
 
    
 <script type="text/javascript">
-var logout = '${changePW}'
-if (logout == "success") {
+if ('${changePW}' == "success") {
 	swal("비밀번호가 변경되었습니다.")
+}
+if('${changeMEM}' == "success"){
+	swal("회원정보가 변경되었습니다.")
 }
 </script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>

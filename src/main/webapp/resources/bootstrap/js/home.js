@@ -151,18 +151,22 @@ $(function() {
 				success : function() {
 					swal("탈퇴완료!","정상적으로 탈퇴되었습니다.","success");
 					self.location = "test"
-				},
-				error : function() {
+				},error : function() {
 					alert("탈퇴실패")
 				}
 			})
 		})
 	})
-
+	
+	
+	
 	/* ㅇㅖ약 ->예약취소 */
 	$(".btn-state").each(function(i) {
 		var bno = $(".bno-input").eq(i).val()
 		if ($(".btn-state").eq(i).text() == "예약취소") {
+			$(".tr-color").eq(i).css("opacity", "0.4")
+		}
+		if ($(".btn-state").eq(i).text() == "예약종료") {
 			$(".tr-color").eq(i).css("opacity", "0.4")
 		}
 		if ($(".btn-state").eq(i).text() == "예약") {
@@ -184,8 +188,10 @@ $(function() {
 						type : "get",
 						success : function() {
 						//	$('#reservation').load(document.URL+ ' #reservation .container');
-
+						
 							self.location="mypage"
+							
+							
 							}
 						})
 					})
@@ -244,7 +250,8 @@ $(function() {
 	
 	$(".btn-state-update").each(function(i) {
 		$(".btn-state-update").eq(i).mouseover(function() {
-			$(this).css("color","red").click(function(){
+			$(this).css("color","red").click(function(e){
+				e.preventDefault();
 				$(".date_admin_update").eq(i).css("display","block")
 				$(".date_admin").eq(i).css("display","none")
 				
@@ -254,7 +261,9 @@ $(function() {
 				$(".state-admin").eq(i).css("display","block")
 				$(".btn-state-admin").eq(i).css("display","none")
 				
-				$(".btn-state-update").eq(i).text("수정완료")
+				$(".btn-state-update").eq(i).text("수정완료").click(function(){
+					$("form[name='f7']").eq(i).submit()
+				})
 			})
 		})
 		$(".btn-state-update").eq(i).mouseout(function() {
@@ -262,5 +271,27 @@ $(function() {
 		})
 	})
 
+if($("#crop").text("▲")){
+	$("#crop").click(function(e){
+		e.preventDefault();
+		$("#mypage_crop").slideUp(500)
+		$("#crop").text("▼")
+	})
+}else{
+	$("#crop").click(function(e){
+		e.preventDefault();
+		$("#mypage_crop").slideDown(500)
+		$("#crop").text("▲")
+	})
+}
+			
+			
+
+	
+		
+	
+	
+	
+	
 })
 

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -15,10 +16,9 @@
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/creative.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
-
-<!-- datepicker -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
 </head>
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -35,7 +35,10 @@
                 <ul class="nav navbar-nav navbar-right">
                  <% if(session.getAttribute("id") != null ){ %>
                  	<li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage" style="color:#f05f40"> <%=session.getAttribute("id") %></a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id") %> 님 반갑습니다!</a>
+                    </li>
+                    <li>
+                    	<a class="page-scroll" href="${pageContext.request.contextPath}/mypage_res" style="color:#f05f40"> MYreservation </a>
                     </li>
                  <%} %>
                     <li>
@@ -45,13 +48,13 @@
                         <a class="page-scroll" href="${pageContext.request.contextPath}/test/#services">Services</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#portfolio">Gallery</a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/test/#portfolio">gallery</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/test/#room">Room</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="">Contact</a>
+                        <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                     <li>
                         <% if(session.getAttribute("id") == null ){ %>
@@ -68,14 +71,23 @@
     </nav>
   <br><br><br>
       
-  	
+    
+
+
+	<input type="hidden" id="session-id" value="<%=session.getAttribute("id") %>" />
 		
+		
+
 <div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
-	<section id="admin_reservation">
+
+    
+	<section id="reservation">
         <div class="container">
+
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">RESERVATION LIST</h2><a href="${pageContext.request.contextPath}/adminpage_cal">달력으로보기</a>
+                    <h2 class="section-heading">MY RESERVATION</h2>
+                    <a href="${pageContext.request.contextPath}/mypage_cal">달력으로보기</a>
                     <hr class="primary">
                 </div>
             </div>
@@ -84,50 +96,26 @@
             <div class="row">
 				<div class="text-center">
 					<div style="margin: 5px auto 0; width: 95%;">
-						<table id="admin_mypagetable" style="border:2px dotted #d2e1e7;width:100%;">
-		 					<c:forEach items="${ADMIN }" var="m">
-								<form action="updatebookroom" method="post" name="f7" >
-									<tr style="border:2px dotted #d2e1e7;" class="tr-color" >
-										<input type="hidden" value="${m.bno }" name="bno" class="bno-input" />
-										<td> &nbsp;&nbsp; No.${m.bno } <br>&nbsp;&nbsp;${m.uid }</td>
-		 						 		<td style="padding:10px;">
-											<c:forEach var="pic" items="${m.files }">
-												<img src="displayFile?filename=${pic }" style="width: 200px; height: 120px;" /><br>
-											</c:forEach>
-										</td>
-										<td width="310px;"><b>< ${m.roomname } ></b><br>${m.content }</td>
-										<td><span class="person_admin">
-											${m.person }명 / 총금액<br><b><fmt:formatNumber pattern="###,###"> ${m.price*m.person }</fmt:formatNumber></b> 원 
-										</span>
-										<span class="person_admin_update" style="display: none;">
-											<input type="number" name="person" value="${m.person }"  />명
-										</span>
-										</td>  
-										
-										<td><b class="date_admin"><fmt:formatDate value="${m.startdate}" /> ~ 
-											<fmt:formatDate value="${m.enddate}" /></b>
-											<span class="date_admin_update" style="display: none;">
-												<input type="text" name="startdate" class="from2" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${m.startdate }"/>'/><br>
-												<input type="text" name="enddate" class="to2" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${m.enddate }"/>'/>
-											</span>
-										</td>
-										<td style="width:100px;">
-											<p class="btn-state-admin">${m.state}</p>
-											<select name="state" class="state-admin" style="display: none;" >
-												<option value="예약">예약</option>
-												<option value="예약취소">예약취소</option>
-												<option value="예약종료">예약종료</option>
-											</select>
-										</td>
-										<td style="width:100px;"><button value="${m.bno }" class="btn-state-update">수정하기</button></td>
-									</tr>
-								</form>	
+						<table id="mypagetable" style="border:2px dotted #d2e1e7;width:100%;">
+	 						<c:forEach items="${END }" var="m">
+								<tr style="border:2px dotted #d2e1e7;" class="tr-color" >
+									<input type="hidden" value="${m.bno }" class="bno-input" />
+									<td> &nbsp;&nbsp; No.${m.bno } </td>
+	 						 		<td style="padding:10px;">
+										<c:forEach var="pic" items="${m.files }">
+											<img src="displayFile?filename=${pic }" style="width: 200px; height: 120px;" /><br>
+										</c:forEach>
+									</td>
+									<td><b>< ${m.roomname } ></b><br>${m.content }</td>
+									<td>${m.person }명 / 총금액<br><b><fmt:formatNumber pattern="###,###"> ${m.price*m.person }</fmt:formatNumber></b> 원 </td>  
+									<td><b><fmt:formatDate value="${m.startdate}" /> ~ <fmt:formatDate value="${m.enddate}" /></b></td>
+									<td style="width:100px;"><button class="btn-state">${m.state}</button></td>
+								</tr>
 							</c:forEach>		
 						</table>
 					</div>
 				</div>
 			</div>
-			<div id='calendar'></div>
         </div>
     </section>
 </div><!-- end of #section-wrap -->
@@ -153,8 +141,15 @@
     </section>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
+   
+<script type="text/javascript">
+if ('${changePW}' == "success") {
+	swal("비밀번호가 변경되었습니다.")
+}
+if('${changeMEM}' == "success"){
+	swal("회원정보가 변경되었습니다.")
+}
+</script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -162,43 +157,5 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/scrollreveal/scrollreveal.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/creative.min.js"></script>
-
-<!-- datepicker -->
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<script type="text/javascript">
-$(function(){
-var dateFormat = "yy/mm/dd",
-     from = $( ".from2" ).datepicker({
-         defaultDate: "+1w",
-         changeMonth: true,
-         minDate:"0",
-         onClose:function(selDate){
-       	  to.datepicker( "option", "minDate", selDate );
-         },
-         numberOfMonths: 1
-       }),
-     to = $( ".to2" ).datepicker({
-       defaultDate: "+1w",  
-       changeMonth: true,
-       numberOfMonths: 1
-     }).on( "change", function() {
-       from.datepicker( "option", "maxDate", getDate( this ) );
-     });
-
-   function getDate( element ) {
-     var date;
-     try {
-       date = $.datepicker.parseDate( dateFormat, element.value );
-     } catch( error ) {
-       date = null;
-     }
-
-     return date;
-   }
-})
-</script>
 </body>
 </html>

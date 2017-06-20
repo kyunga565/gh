@@ -16,4 +16,5 @@ public interface UserService {
 	
 	void changePW(UserVO vo) throws Exception;
 	UserVO selectuser2(String id) throws Exception;
+	void updatemem(UserVO vo) throws Exception;
 }

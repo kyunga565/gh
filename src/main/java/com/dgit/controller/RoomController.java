@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dgit.domain.Booking_Room;
 import com.dgit.domain.RoomVO;
 import com.dgit.domain.UserVO;
 import com.dgit.interceptor.LoginInterceptor;
@@ -72,7 +73,7 @@ public class RoomController {
 		}
 		return entity;
 	}
-	
+
 	@RequestMapping(value = "insertroom", method = RequestMethod.POST)
 	public String roomPOST(RoomVO vo, List<MultipartFile> imagefiles, RedirectAttributes rttr,
 			HttpServletRequest request) throws Exception {
@@ -111,8 +112,8 @@ public class RoomController {
 		r_no.setPrice(vo.getPrice());
 		r_no.setRoomname(vo.getRoomname());
 		r_no.setContent(vo.getContent());
-	//	r_no.setFiles(vo.getFiles());
-		
+		// r_no.setFiles(vo.getFiles());
+
 		// 파일업로드--------------------------------------------------------
 		ArrayList<String> filenames = new ArrayList<String>();
 		for (MultipartFile file : imagefiles) {
@@ -123,13 +124,26 @@ public class RoomController {
 			filenames.add(savedName);
 		}
 		String[] sFiles = filenames.toArray(new String[filenames.size()]);
-		r_no.setFiles(sFiles);		
-		//vo.setFiles(sFiles);
+		r_no.setFiles(sFiles);
+		// vo.setFiles(sFiles);
 		// ----------------------------------------------------------------
-		
+
 		service.update(r_no);
-		System.out.println(r_no.getRno() + "수정완료"+r_no.getFiles());
+		System.out.println(r_no.getRno() + "수정완료" + r_no.getFiles());
 		return "redirect:/test";
 	}
-	
+
+	@RequestMapping(value = "updatebookroom", method = RequestMethod.POST)
+	public String roombookUPDATE(Booking_Room vo,int bno,HttpSession session) throws Exception {
+		System.out.println("왓슴니당"+vo);
+		Booking_Room br =  service.selectADMIN_update(bno);
+		System.out.println(br);
+		br.setState(vo.getState());
+		br.setPerson(vo.getPerson());
+		br.setStartdate(vo.getStartdate());
+		br.setEnddate(vo.getEnddate());
+		
+		service.updatebookroom(br);
+		return "redirect:/adminpage";
+	}
 }

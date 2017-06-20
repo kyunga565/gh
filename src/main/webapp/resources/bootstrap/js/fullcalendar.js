@@ -1406,7 +1406,7 @@ newMomentProto.format = function() {
 		return formatDate(this, arguments[0]); // our extended formatting
 	}
 	if (this._ambigTime) {
-		return oldMomentFormat(this, 'YYYY-MM-DD');
+		return oldMomentFormat(this, 'MM/DD/YYYY');
 	}
 	if (this._ambigZone) {
 		return oldMomentFormat(this, 'YYYY-MM-DD[T]HH:mm:ss');
@@ -1416,7 +1416,7 @@ newMomentProto.format = function() {
 
 newMomentProto.toISOString = function() {
 	if (this._ambigTime) {
-		return oldMomentFormat(this, 'YYYY-MM-DD');
+		return oldMomentFormat(this, 'MM/DD/YYYY');
 	}
 	if (this._ambigZone) {
 		return oldMomentFormat(this, 'YYYY-MM-DD[T]HH:mm:ss');

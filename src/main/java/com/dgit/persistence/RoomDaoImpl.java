@@ -93,4 +93,19 @@ public class RoomDaoImpl implements RoomDao {
 		return session.selectList(namespace + ".selectADMIN");
 	}
 
+	@Override
+	public void updatebookroom(Booking_Room vo) throws Exception {
+		session.update(namespace + ".updatebookroom", vo);
+	}
+
+	@Override
+	public Booking_Room selectADMIN_update(int bno) throws Exception {
+		return session.selectOne(namespace + ".selectADMIN_update", bno);
+	}
+
+	@Override
+	public List<Booking_Room> selectMYPAGE() throws Exception {
+		return session.selectList(namespace + ".selectMYPAGE");
+	}
+
 }

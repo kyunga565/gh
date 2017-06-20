@@ -39,7 +39,10 @@
                 <ul class="nav navbar-nav navbar-right">
                  <% if(session.getAttribute("id") != null ){ %>
                  	<li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage" style="color:#f05f40"> <%=session.getAttribute("id") %></a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id") %> 님 반갑습니다!</a>
+                    </li>
+                    <li>
+                    	<a class="page-scroll" href="${pageContext.request.contextPath}/mypage_res" style="color:#f05f40"> MYreservation </a>
                     </li>
                  <%} %>
                     <li>
@@ -75,15 +78,70 @@
     
 	<input type="hidden" id="session-id" value="<%=session.getAttribute("id") %>" />
 		
+	
+	
+	
+	
+		<div id="book-wrap-cal" style="color: black;position:absolute ;display:none; background-color:#f9f9f9; z-index:999; width: 500px; height: 600px; margin:700px; margin-top: 200px; box-shadow: 0 0 5px gray;">
+			<div class="login-header"></div>
+			<div class="login-header2">
+				<span>BOOKING </span> <a href="" class="book-closebtn"> <img
+					src="${pageContext.request.contextPath}/resources/bootstrap/img/x-button.png" />
+				</a>
+			</div>
+			<div class="login-div" style="text-align: center;">
+				<form action="booking" method="post" name="f4" id="booking">
+					<input type="text" name="bno" value="${nextBno }" readonly="readonly"/><br><br>
+					<input type="text" name="uid" value="<%=session.getAttribute("id")%>" readonly="readonly"/><br><br>
+					 
+ 					<select name="rno">
+						<option disabled="disabled" selected="selected"> -----시설이름----- </option>
+						<c:forEach items="${roomVO }" var="i">
+							<option value="${i.rno }">${i.roomname} / 최대 ${i.people }인 (1인${i.price })</option>
+						</c:forEach>
+					</select> 
+					<br><br>
+					
+					<select name="person">
+						<option disabled="disabled" selected="selected"> -----예약인원----- </option>
+						<c:forEach begin="1" end="${maxperson }" step="1" var="test">
+							<option value="${test }"> ${test } 명</option>
+						</c:forEach>
+					</select>
+					<br><br>
+					
+	
+					<input type="text" id="from"  name="startdate"  placeholder="시작일" ><br><br> 
+					<input type="text" id="to" name="enddate" placeholder="끝나는일"><br><br>
+							
+					<select name="state">
+						<option value="예약">예약</option>
+					</select> 
+					<br><br>
+					
+					<p>
+						<button type="submit" class="btn-room" id="res">예약하기</button>
+					</p>
+				</form>
+			</div>
+		</div>
+	
+	
+	
+	
+	
+	
+	
 		
 		
-<div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
+<div id="section-wrap" style="background-color: rgba(218,207,118,0.1);" >
 	
 	<section id="admin_reservation">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">RESERVATION LIST</h2><a href="${pageContext.request.contextPath}/adminpage">리스트로보기</a>
+                    <h2 class="section-heading">MY RESERVATION</h2><a href="${pageContext.request.contextPath}/mypage_res">리스트로보기</a>
+                   
                     <hr class="primary">
                 </div>
             </div>
@@ -96,7 +154,6 @@
 					</div>
 				</div>
 			</div>
-			<div id='calendar'></div>
         </div>
     </section>
 </div><!-- end of #section-wrap -->
@@ -107,7 +164,7 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading"> Contact Us </h2>
                     <hr class="primary">
-                    <p>궁금한 점이 있다면 언제든지 문의하세요 ! </p>
+                    <p>궁금한 점이 있다면 언제든지 문의하세요 !</p>
                 </div>
                 <div class="col-lg-4 col-lg-offset-2 text-center">
                     <i class="fa fa-phone fa-3x sr-contact"></i>
@@ -121,7 +178,6 @@
         </div>
     </section>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -131,6 +187,7 @@
 <script src='${pageContext.request.contextPath}/resources/bootstrap/js/moment.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/fullcalendar.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 $(function(){
 	$('#calendar').fullCalendar({
@@ -142,14 +199,17 @@ $(function(){
 		defaultDate: new Date(),
 		navLinks: true,
 		defaultValue: "month",
-/* 		selectable: true, */
+		selectable: true,
 		monthNames:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
 		monthNamesShort:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
 		dayNames:["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
 		dayNamesShort: ["일","월","화","수","목","금","토"],
+		validRange: {
+	        start:  new Date() 
+	    },
 		buttonText:{today:"오늘",month:"월별",week:"주별",day:"일별"},
 		eventLimit: true,
-/* 			  selectable : true,
+			  selectable : true,
 			  selectHelper : true,
 			  select : function(start,end) {
 			  swal({
@@ -160,23 +220,31 @@ $(function(){
 				  confirmButtonText: "Yes",
 				  closeOnConfirm: true  
 			   },function(){
-				   
+				   $("#book-wrap-cal").slideToggle(1000);
+				   $("#from").val(start.format());
+				   $("#to").val(end.format())
+				  
+				   $(".book-closebtn").click(function(e) {
+					e.preventDefault();
+				 	$("#book-wrap-cal").slideUp(1000)
+				})
+				
 			   })
-			  }, */
+			  },
 		events: [
-            <c:forEach var="a" items="${ADMIN}">
+            <c:forEach var="a" items="${END}">
 			{
 			  title: '${a.roomname} (${a.state})',
-			  content :'${a.uid} <br> ${a.person}명 <br> ${a.state} <br>'+
+			  content :'${a.uid} <br> ${a.state} 상태 <br>'+
 			  ' <fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" /> ~'+
 			  ' <fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />',
 			  start: '<fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" />',
 			  end:'<fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />'
 			  <c:choose>
-			      <c:when test="${a.state=='예약취소'}">,color : '#d2e1e7'</c:when>
-			      <c:when test="${a.state=='예약'}">,color : '#f0634b'</c:when>
-			      <c:when test="${a.state=='예약종료'}">,color : '#cdcdcd'</c:when>
-			      <c:otherwise>,color : '#f0634b' </c:otherwise>
+			  <c:when test="${a.state=='예약취소'}">,color : '#d2e1e7'</c:when>
+		      <c:when test="${a.state=='예약'}">,color : '#f0634b'</c:when>
+		      <c:when test="${a.state=='예약종료'}">,color : '#cdcdcd'</c:when>
+		      <c:otherwise>,color : '#f0634b' </c:otherwise>
 			  </c:choose>
 			},
             </c:forEach>
@@ -189,6 +257,45 @@ $(function(){
 			})
 		}
 	})
+	
+	var sessionid = $("#session-id").val();
+	
+	
+	
+
+	
+	var dateFormat = "MM/dd/yyyy",
+    from = $( "#from" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        minDate:"0",
+        onClose:function(selDate){
+      	  to.datepicker( "option", "minDate", selDate );
+        },
+        numberOfMonths: 1
+      }),
+    to = $( "#to" ).datepicker({
+      defaultDate: "+1w",  
+      changeMonth: true,
+      numberOfMonths: 1
+    }).on( "change", function() {
+      from.datepicker( "option", "maxDate", getDate( this ) );
+    });
+
+  function getDate( element ) {
+    var date;
+    try {
+      date = $.datepicker.parseDate( dateFormat, element.value );
+    } catch( error ) {
+      date = null;
+    }
+
+    return date;
+  }
+	
+	
+	
+	
 })
 </script>
 </body>

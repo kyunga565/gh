@@ -61,6 +61,11 @@ public class UserServiceImpl implements UserService {
 		return dao.selectuser2(id);
 	}
 
+	@Override
+	public void updatemem(UserVO vo) throws Exception {
+		dao.updatemem(vo);
+	}
+
 	
 
 

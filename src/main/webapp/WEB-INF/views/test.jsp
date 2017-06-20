@@ -73,18 +73,18 @@ var dateFormat = "yy/mm/dd",
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-              <%--    <% if(session.getAttribute("id")== ("admin")){ %> --%>
                  <c:if test="${id == 'admin'}">
                  	<li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage" style="color:#f05f40"> <%=session.getAttribute("id")%></a>
                     </li>
                  </c:if>
                   <c:if test="${id != 'admin' && id != null}">
-              <%--    <%}else if(session.getAttribute("id") != null && !session.getAttribute("id").equals("admin")){ %> --%>
-                 	<li>
+             		<li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id")%> 님 반갑습니다! </a>
                     </li>
-              <%--    <%}%> --%>
+                    <li>
+                    	<a class="page-scroll" href="${pageContext.request.contextPath}/mypage_res"> MYreservation </a>
+                    </li>
              	 </c:if>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
@@ -146,7 +146,7 @@ var dateFormat = "yy/mm/dd",
         </div>
 
 
-		<div id="login-wrap">
+		<div id="login-wrap" style="position: fixed;z-index: 99;">
 			<div class="login-header"></div><!-- 다홍색헤더1px -->
 			<div class="login-header2">	<span>LOGIN </span> 
 				<a href="" class="closebtn">
@@ -165,7 +165,7 @@ var dateFormat = "yy/mm/dd",
 			</div>
 		</div>
 
-		<div id="join-wrap">
+		<div id="join-wrap" style="position: fixed;z-index: 99;">
 			<div class="login-header"></div><!-- 다홍색헤더1px -->
 			<div class="login-header2"><span>JOIN </span>
 				<a href="" class="closebtn">
@@ -192,7 +192,7 @@ var dateFormat = "yy/mm/dd",
 		
 		
 		<div id="book-wrap"
-			style="color: black; position: absolute; background-color: #f9f9f9;display: none; width: 500px; height: 600px; margin-left: 700px; box-shadow: 0 0 5px gray; margin-top: 200px;">
+			style="color: black; position: fixed;z-index:99; background-color: #f9f9f9;display: none; width: 500px; height: 600px; margin-left: 700px; box-shadow: 0 0 5px gray; margin-top: 200px;">
 			<div class="login-header"></div>
 			<!-- 다홍색헤더1px -->
 			<div class="login-header2">
@@ -225,9 +225,9 @@ var dateFormat = "yy/mm/dd",
 					<input type="text" id="from" name="startdate" placeholder="시작일" ><br><br> 
 					<input type="text" id="to" name="enddate" placeholder="끝나는일"><br><br>
 							
-					<select name="state">
-						<option disabled="disabled" selected="selected"> -----예약상태----- </option>
-						<option value="예약">예약</option>
+					<select name="state"><!-- 
+						<option disabled="disabled"> -----예약상태----- </option> -->
+						<option value="예약" selected="selected" disabled="disabled">예약</option>
 					</select> 
 					<br><br>
 					
@@ -548,7 +548,7 @@ var dateFormat = "yy/mm/dd",
 						</p>
 						<p class="r_content">${i.content }</p> <!-- class="btn-room" -->
 						 <c:if test="${id == 'admin'}">
-							<button class="updateroom1" value="${i.rno }">수정</button> 
+						 	<button class="updateroom1" value="${i.rno }">수정</button>
 							<button class="deleteroom" value="${i.rno }">삭제</button>
 						</c:if>
 						<c:if test="${id != 'admin' && id != null }">

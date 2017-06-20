@@ -26,5 +26,8 @@ public interface RoomService {
 
 	List<Booking_Room> selectEND(String id) throws Exception;
 	List<Booking_Room> selectADMIN() throws Exception;
-
+	List<Booking_Room> selectMYPAGE() throws Exception;
+	
+	Booking_Room selectADMIN_update(int bno) throws Exception;
+	void updatebookroom(Booking_Room vo) throws Exception;
 }

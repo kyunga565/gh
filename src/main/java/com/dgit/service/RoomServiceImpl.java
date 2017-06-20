@@ -128,5 +128,20 @@ public class RoomServiceImpl implements RoomService {
 		
 	}
 
+	@Override
+	public void updatebookroom(Booking_Room vo) throws Exception {
+		dao.updatebookroom(vo);
+	}
+
+	@Override
+	public Booking_Room selectADMIN_update(int bno) throws Exception {
+		return dao.selectADMIN_update(bno);
+	}
+
+	@Override
+	public List<Booking_Room> selectMYPAGE() throws Exception {
+		return dao.selectMYPAGE();
+	}
+
 
 }

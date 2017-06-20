@@ -29,5 +29,9 @@ public interface RoomDao {
 	List<Booking_Room> selectEND(String id) throws Exception;
 
 	List<Booking_Room> selectADMIN() throws Exception;
+	
+	void updatebookroom(Booking_Room vo) throws Exception;
+	Booking_Room selectADMIN_update(int bno) throws Exception;
+	List<Booking_Room> selectMYPAGE() throws Exception;
 
 }

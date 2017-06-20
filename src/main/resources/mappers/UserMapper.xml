@@ -40,4 +40,9 @@
 	<select id="selectuser2" resultType="UserVO">
 		select * from user where uid = #{uid}
 	</select>
+	
+	<update id="updatemem">
+		update user set uaddr=#{uaddr},utel=#{utel} where uid=#{uid}
+	</update>
+	
 </mapper>

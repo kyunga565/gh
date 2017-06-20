@@ -26,6 +26,7 @@ form[name='f6'] input[type='text']{border:2px solid #d2e1e7; width:250px;height:
 form[id='booking'] input[type='text']{border:2px solid #d2e1e7; width:250px;height: 35px; border-radius:5px;}
 .closebtn{ float: right;margin:10px; }		
 .mem-closebtn{ float: right;margin:10px; }	
+.book-closebtn{ float: right;margin:10px; }
 .btn-login{padding:15px; margin:15px; color:white; border-radius:20px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}	
 .btn-room{border:1px solid #d2e1e7; padding:10px; margin:10px; color:#f05f40; border-radius:10px; background-color:#d2e1e7; font-size: 12px;font-weight: bold;}
 form[name='f1'] input[name='uid']{margin-left:60px;}

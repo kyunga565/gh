@@ -50,18 +50,11 @@ public class HomeController {
 
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
 	public void mypageGET(LoginVO dto, Model model, HttpServletRequest request) throws Exception {
-
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("userVO", uservice.selectuser(id));
-
-		// model.addAttribute("myinfo", uservice.selectmypage(id));
-		// int rno = bservice.selectrno(id);
-		// model.addAttribute("roominfo", rservice.selectfromrno(rno));
-		// model.addAttribute("roominfo", rservice.selectbook(id));
-		model.addAttribute("mybook", bservice.selectbookfromid(id));
-
-		model.addAttribute("END", rservice.selectEND(id));
+	//	model.addAttribute("mybook", bservice.selectbookfromid(id));
+	//	model.addAttribute("END", rservice.selectEND(id));
 	}
 
 	@RequestMapping(value = "adminpage", method = RequestMethod.GET)
@@ -72,15 +65,36 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "adminpage_cal", method = RequestMethod.GET)
-	public void ad(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-
+	public void adminpage_cal(Model model) throws Exception {
 		model.addAttribute("ADMIN", rservice.selectADMIN());
 	}
+	
 	@RequestMapping(value = "CalendarExam", method = RequestMethod.GET)
 	public void ad2(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-
 		model.addAttribute("ADMIN", rservice.selectADMIN());
 	}
 
 
+	@RequestMapping(value = "mypage_cal", method = RequestMethod.GET)
+	public void mypage_calGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
+		model.addAttribute("MYPAGE", rservice.selectMYPAGE());
+		model.addAttribute("roomVO", rservice.selectAll());
+		int Nextrno = rservice.nextrno();
+		model.addAttribute("nextRno", Nextrno);
+		int Nextbno = bservice.nextbno();
+		model.addAttribute("nextBno", Nextbno);
+		int Maxperson = bservice.maxperson();
+		model.addAttribute("maxperson", Maxperson);
+		
+
+		String id = (String) session.getAttribute("id");
+		model.addAttribute("END", rservice.selectEND(id));
+		
+	}
+	@RequestMapping(value = "mypage_res", method = RequestMethod.GET)
+	public void mypage_redGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		String id = (String) session.getAttribute("id");
+		model.addAttribute("END", rservice.selectEND(id));
+	}
 }

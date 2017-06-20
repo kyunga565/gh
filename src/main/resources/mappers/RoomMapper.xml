@@ -32,14 +32,15 @@
 		delete from room where rno = #{rno}
 	</delete>
 
- 	<select id="selectfromrno" resultType="RoomVO">
+	<select id="selectfromrno" resultType="RoomVO">
 		select * from room where
 		rno = #{rno}
 	</select>
- 
+
 	<update id="updateroom">
 		update room set
-		roomname = #{roomname}, price = #{price}, people = #{people}, content
+		roomname = #{roomname}, price =
+		#{price}, people = #{people}, content
 		=
 		#{content}
 		where rno = #{rno}
@@ -50,21 +51,34 @@
 	</delete>
 
 	<select id="selectbook" resultType="RoomVO">
-		select * from booking b,room r where b.rno = r.rno and uid = #{uid}
+		select * from booking b,room
+		r where b.rno = r.rno and uid = #{uid}
 	</select>
-	
+
 	<select id="selectEND" resultType="Booking_Room">
-		select * from bookroom where uid = #{uid} order by bno desc
+		select * from bookroom where
+		uid = #{uid} order by bno desc
 	</select>
 
 	<select id="selectADMIN" resultType="Booking_Room">
-		select * from bookroom order by bno desc
+		select * from bookroom order
+		by bno desc
 	</select>
 
+	<select id="selectADMIN_update" resultType="Booking_Room">
+		select * from bookroom where bno=#{bno}
+	</select>
+	
+	<update id="updatebookroom">
+		update bookroom set
+		person=#{person},startdate=#{startdate},enddate=#{enddate},state=#{state}
+		where bno = #{bno}
+	</update>
 
 
-
-
+	<select id="selectMYPAGE" resultType="Booking_Room">
+		select * from bookroom  where state = '예약' order by bno desc
+	</select>
 
 
 

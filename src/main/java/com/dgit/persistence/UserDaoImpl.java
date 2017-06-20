@@ -57,6 +57,9 @@ public class UserDaoImpl implements UserDao {
 		return session.selectOne(namespace + ".selectuser2", id);
 	}
 
-	
+	@Override
+	public void updatemem(UserVO vo) throws Exception {
+		session.update(namespace + ".updatemem", vo);
+	}
 
 }

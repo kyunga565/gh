@@ -42,6 +42,13 @@ $(function() {
 			$next.css("display", "inline")
 			return false
 		}
+		var uid = $("#uid").val()
+		var upw = $("#upw").val()
+		var name = $("#uname").val()
+		if(uid == "" || upw == "" || name == ""){
+			swal("빈칸을 확인하세요!")
+			return false
+		}
 	})
 	/* 회원가입할때 아이디중복체크 */
 	$("#checkID").click(function(e) {

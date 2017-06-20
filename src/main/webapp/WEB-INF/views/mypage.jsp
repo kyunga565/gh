@@ -82,9 +82,7 @@
 			</div>
 			<div class="member-update-div">
 				<form action="changePW" method="post" name="f5">
-					<c:forEach items="${userVO }" var="i">
-						<input type="hidden" value="${i.upw }" id="default_pw" />
-					</c:forEach>
+					<input type="hidden" value="${userVO.upw }" id="default_pw" />
 					<input type="text" placeholder="기존비밀번호" id="default_pw2" /><br><span class="default_checkpw"> 기존비밀번호를 확인하세요.</span><br>
 					<input type="text" id="upw0" name="upw0" placeholder="변경할비밀번호" /><br><br>
 					<input type="text" id="upw" name="upw" placeholder="비밀번호확인" /><br><span class="checkpw"> 비밀번호를 확인하세요.</span><br>
@@ -107,14 +105,12 @@
 			</div>
 			<div class="member-update-div">
 				<form action="mem_update" method="post" name="f6">
-				<c:forEach items="${userVO }" var="i">
 					<input type="text" value="<%=session.getAttribute("id") %>" readonly="readonly"/><br><br>
-					<input type="text" name="uaddr" value="${i.uaddr }" placeholder="주소"/><br><br>
-					<input type="text" name="utel" value="${i.utel }" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
+					<input type="text" name="uaddr" value="${userVO.uaddr }" placeholder="주소"/><br><br>
+					<input type="text" name="utel" value="${userVO.utel }" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
 					<p style="padding-left: 40px;">
 						<button type="submit" class="btn-room"> 회원정보 수정완료  </button>
 					</p>
-				</c:forEach>	
 				</form>
 			</div>
 		</div>
@@ -127,83 +123,43 @@
 
 <div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
 <section id="mypage">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">MYPAGE </h2>
-                    <hr class="primary">
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">MYPAGE </h2>
+                <hr class="primary">
             </div>
         </div>
-        <div class="container" id="mypage_crop">
-            <div class="row">
-                <div class="text-center" style="border:2px dotted #d2e1e7;width:50%;margin:0 auto;">
-                    <div style="width:80%;margin:0 auto;padding:40px;">
-                    	<c:forEach items="${userVO }" var="i">
-                    	<table style="margin:0 auto;">
-                    		<tr>
-                    			<td style="width:100px;color:#222222;font-weight: bold;">아이디</td>
-                    			<td style="padding:20px;"> <b style="font-size: 15px;">${i.uid }</b> <br> <a href="" id="chPW">[비밀번호변경]</a></td>
-                    		</tr>
-                    		<tr>
-                    			<td style="color:#222222;font-weight: bold;">이름</td>
-                    			<td style="padding:20px;">${i.uname }</td>
-                    		</tr>
-                    		<tr>
-                    			<td style="color:#222222;font-weight: bold;">주소</td>
-                    			<td style="padding:20px;">${i.uaddr }</td>
-                    		</tr>
-                    		<tr>
-                    			<td style="color:#222222;font-weight: bold;">전화번호</td>
-                    			<td style="padding:20px;">${i.utel }</td>
-                    		</tr>
-                    	</table>
-                    	</c:forEach>
-                    </div>
-                <button id="updatemem" class="btn-room">수정</button><button id="dropout" class="btn-room">회원탈퇴</button><br><br><br>
-               
+    </div>
+    <div class="container" id="mypage_crop">
+        <div class="row">
+            <div class="text-center" style="border:2px dotted #d2e1e7;width:50%;margin:0 auto;">
+                <div style="width:80%;margin:0 auto;padding:40px;">
+                	<table style="margin:0 auto;">
+                		<tr>
+                			<td style="width:100px;color:#222222;font-weight: bold;">아이디</td>
+                			<td style="padding:20px;"> <b style="font-size: 15px;">${userVO.uid }</b> <br> <a href="" id="chPW">[비밀번호변경]</a></td>
+                		</tr>
+                		<tr>
+                			<td style="color:#222222;font-weight: bold;">이름</td>
+                			<td style="padding:20px;">${userVO.uname }</td>
+                		</tr>
+                		<tr>
+                			<td style="color:#222222;font-weight: bold;">주소</td>
+                			<td style="padding:20px;">${userVO.uaddr }</td>
+                		</tr>
+                		<tr>
+                			<td style="color:#222222;font-weight: bold;">전화번호</td>
+                			<td style="padding:20px;">${userVO.utel }</td>
+                		</tr>
+                	</table>
                 </div>
+            <button id="updatemem" class="btn-room">수정</button><button id="dropout" class="btn-room">회원탈퇴</button><br><br><br>
+           
             </div>
         </div>
-    </section>
-    
-	<%-- <section id="reservation">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">MY RESERVATION</h2>
-                    <a href="${pageContext.request.contextPath}/mypage_cal">달력으로보기</a>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-				<div class="text-center">
-					<div style="margin: 5px auto 0; width: 95%;">
-						<table id="mypagetable" style="border:2px dotted #d2e1e7;width:100%;">
-	 						<c:forEach items="${END }" var="m">
-								<tr style="border:2px dotted #d2e1e7;" class="tr-color" >
-									<input type="hidden" value="${m.bno }" class="bno-input" />
-									<td> &nbsp;&nbsp; No.${m.bno } </td>
-	 						 		<td style="padding:10px;">
-										<c:forEach var="pic" items="${m.files }">
-											<img src="displayFile?filename=${pic }" style="width: 200px; height: 120px;" /><br>
-										</c:forEach>
-									</td>
-									<td><b>< ${m.roomname } ></b><br>${m.content }</td>
-									<td>${m.person }명 / 총금액<br><b><fmt:formatNumber pattern="###,###"> ${m.price*m.person }</fmt:formatNumber></b> 원 </td>  
-									<td><b><fmt:formatDate value="${m.startdate}" /> ~ <fmt:formatDate value="${m.enddate}" /></b></td>
-									<td style="width:100px;"><button class="btn-state">${m.state}</button></td>
-								</tr>
-							</c:forEach>		
-						</table>
-					</div>
-				</div>
-			</div>
-        </div>
-    </section> --%>
+    </div>
+</section>
 </div><!-- end of #section-wrap -->
    
 	<section id="contact">

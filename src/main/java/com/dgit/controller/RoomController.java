@@ -3,7 +3,10 @@ package com.dgit.controller;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -18,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -141,6 +145,17 @@ public class RoomController {
 
 		service.updatebookroom(br);
 		return "redirect:/adminpage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "people", method = RequestMethod.GET)
+	public Map<String, Object> people(int rno,Date startdate) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("people", service.selectpeople(rno));
+		map.put("sumperson", service.selectsumperson(rno,startdate));
+		 
+		return map;
 	}
 
 }

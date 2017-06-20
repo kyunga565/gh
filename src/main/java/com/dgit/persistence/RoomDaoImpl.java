@@ -1,5 +1,6 @@
 package com.dgit.persistence;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,16 +45,6 @@ public class RoomDaoImpl implements RoomDao {
 		return session.selectList(namespace + ".getAttach", rno);
 	}
 
-	// @Override
-	// public RoomVO selectlist(int rno) throws Exception {
-	// return session.selectOne(namespace + ".selectlist", rno);
-	// }
-	//
-	// @Override
-	// public List<String> selectroomname() throws Exception {
-	// return session.selectList(namespace + ".selectroomname");
-	// }
-
 	@Override
 	public int nextrno() throws Exception {
 		return session.selectOne(namespace + ".nextrno");
@@ -77,11 +68,6 @@ public class RoomDaoImpl implements RoomDao {
 	@Override
 	public void removeAttach(int rno) throws Exception {
 		session.delete(namespace + ".removeAttach", rno);
-	}
-
-	@Override
-	public List<RoomVO> selectbook(String id) throws Exception {
-		return session.selectList(namespace + ".selectbook", id);
 	}
 
 	@Override
@@ -126,6 +112,19 @@ public class RoomDaoImpl implements RoomDao {
 
 	@Override
 	public int countPaging(Criteria cri) throws Exception {
-		return session.selectOne(namespace + ".countPaging",cri);
+		return session.selectOne(namespace + ".countPaging", cri);
+	}
+
+	@Override
+	public int selectpeople(int rno) throws Exception {
+		return session.selectOne(namespace + ".selectpeople", rno);
+	}
+
+	@Override
+	public int selectsumperson(int rno,Date startdate) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("rno", rno);
+		map.put("startdate", startdate);
+		return session.selectOne(namespace + ".selectsumperson", map);
 	}
 }

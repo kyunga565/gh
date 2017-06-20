@@ -1,7 +1,5 @@
 package com.dgit.domain;
 
-import java.util.Arrays;
-
 public class RoomVO {
 	private int rno;
 	private String roomname;

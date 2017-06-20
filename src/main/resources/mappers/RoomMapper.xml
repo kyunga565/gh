@@ -50,11 +50,6 @@
 		delete from file where rno = #{rno}
 	</delete>
 
-	<!-- <select id="selectbook" resultType="RoomVO">
-		select * from booking b,room
-		r where b.rno = r.rno and uid = #{uid}
-	</select> -->
-
 	<select id="selectEND" resultType="Booking_Room">
 		select * from bookroom where
 		uid = #{uid} order by bno desc
@@ -66,33 +61,44 @@
 	</select>
 
 	<select id="selectADMIN_update" resultType="Booking_Room">
-		select * from bookroom where bno=#{bno}
+		select * from
+		bookroom where bno=#{bno}
 	</select>
-	
+
 	<update id="updatebookroom">
 		update bookroom set
 		person=#{person},startdate=#{startdate},enddate=#{enddate},state=#{state}
 		where bno = #{bno}
 	</update>
 
-
 	<select id="selectMYPAGE" resultType="Booking_Room">
-		select * from bookroom  where state = '예약' order by bno desc
+		select * from bookroom
+		where state = '예약' order by bno desc
 	</select>
-
 
 	<!-- 페이징처리 -->
 	<select id="listPage" resultType="Booking_Room">
-		select * from bookroom where bno>0 order by bno desc limit #{page},5
+		select * from bookroom where
+		bno>0 order by bno desc limit #{page},5
 	</select>
 	<select id="listCriteria" resultType="Booking_Room">
-		select * from bookroom where bno>0 
+		select * from bookroom
+		where bno>0
 		order
 		by bno desc limit #{pageStart},#{perPageNum}
 	</select>
 	<select id="countPaging" resultType="int">
-		select count(bno) from bookroom where bno > 0
+		select count(bno) from
+		bookroom where bno > 0
 	</select>
-	
 
+	<!-- 해당방에 들어갈수있는 사람수 -->
+	<select id="selectpeople" resultType="int">
+		select people from room where rno = #{rno}
+	</select>
+
+	<!-- 	select sum(person) from booking where rno = #{rno} -->
+	<select id="selectsumperson" resultType="int">
+		select if(sum(person) is null,0,sum(person)) from booking where rno = #{rno} and state='예약' and (startdate=#{startdate} or enddate=#{startdate})
+	</select>
 </mapper>

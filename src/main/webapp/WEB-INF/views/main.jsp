@@ -17,12 +17,6 @@
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/home.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/sweetalert.css" rel="stylesheet">
-<!-- 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/js/home.js"></script>
--->
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -176,7 +170,7 @@ var dateFormat = "yy/mm/dd",
 				<form action="join" method="post" name="f1">
 					<input type="text" id="uid" name="uid" placeholder="아이디"/><button type="button" id="checkID">중복확인</button><br>
 					<span class="checktrue"> 사용가능한 아이디입니다.</span><span class="checkfalse"> 사용불가능한 아이디입니다.</span><br>
-					<input type="text" name="uname" placeholder="이름"/><br><br>
+					<input type="text" id="uname" name="uname" placeholder="이름"/><br><br>
 					<input type="text" id="upw0" name="upw0" placeholder="비밀번호"/><br><br>
 					<input type="text" id="upw" name="upw" placeholder="비밀번호확인"/><br><span class="checkpw"> 비밀번호를 확인하세요.</span><br>
 					<input type="text" name="uaddr" placeholder="주소"/><br><br>
@@ -191,8 +185,7 @@ var dateFormat = "yy/mm/dd",
 		
 		
 		
-		<div id="book-wrap"
-			style="color: black; position: fixed;z-index:99; background-color: #f9f9f9;display: none; width: 500px; height: 600px; margin-left: 700px; box-shadow: 0 0 5px gray; margin-top: 200px;">
+		<div id="book-wrap">
 			<div class="login-header"></div>
 			<!-- 다홍색헤더1px -->
 			<div class="login-header2">
@@ -201,7 +194,7 @@ var dateFormat = "yy/mm/dd",
 				</a>
 			</div>
 			<div class="login-div">
-				<form action="booking" method="post" name="f4" id="booking">
+				<form action="" method="post" name="f4" id="booking">
 					<input type="text" name="bno" value="${nextBno }" readonly="readonly"/><br><br>
 					<input type="text" name="uid" value="<%=session.getAttribute("id")%>" readonly/><br><br>
 					 
@@ -221,13 +214,11 @@ var dateFormat = "yy/mm/dd",
 					</select>
 					<br><br>
 					
-	
 					<input type="text" id="from" name="startdate" placeholder="시작일" ><br><br> 
 					<input type="text" id="to" name="enddate" placeholder="끝나는일"><br><br>
 							
-					<select name="state"><!-- 
-						<option disabled="disabled"> -----예약상태----- </option> -->
-						<option value="예약" selected="selected" disabled="disabled">예약</option>
+					<select name="state">
+						<option value="예약" selected="selected">예약</option>
 					</select> 
 					<br><br>
 					
@@ -237,9 +228,51 @@ var dateFormat = "yy/mm/dd",
 				</form>
 			</div>
 		</div>
-		
-		
-		
+				
+		<script type="text/javascript">
+			$("#res").click(function(e){
+				e.preventDefault()
+				var person = $("select[name='person']").val()//예약하려는인원
+				var rno = $("select[name='rno']").val()
+				//해당방에들어갈수인원 <(예약하려는인원+예약된인원) 리턴
+				console.log("선택한 방번호 :"+ rno)
+				var startdate = $("#from").val()
+				
+			$.ajax({
+				url : "people",
+				dataType : "json",
+				data : {
+					"rno" : rno,
+					"startdate" : startdate
+				},
+				type : "get",
+				success : function(data) {
+					var now = data.sumperson //현재예약된인원
+					var people = data.people // 들어갈수있는인원
+					/* 	if(now == null){
+							now = 0
+						} */
+					console.log(data.sumperson)
+					if (people < (now + person)) {
+						swal({
+							title : "예약불가",
+							text : "해당시설은 이미 예약되었습니다.",
+							type : "info",
+							confirmButtonColor : "#DD6B55"
+						})
+						return false
+					}
+					
+					$("form[name='f4']").attr("action", "booking")
+					$("form[name='f4']").attr("method", "post")
+					$("form[name='f4']").submit()
+					
+					},error : function(data, msg) {
+						console.log("에러?" + data + msg)
+					}
+				})
+			})
+		</script>
 	</header>
 
 	<section class="bg-primary" id="about">
@@ -640,6 +673,19 @@ if('${updateroom}' == "success"){
 		type:"success",
 		timer:1000
 	}) 
+}
+if ('${book}' == "success") {
+	swal({
+		title:"예약완료!",
+		text: "예약내역을 확인하시겠습니까?",
+		type:"success",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Yes",
+		closeOnConfirm: true
+	},function(){
+		self.location="mypage_res"
+	})
 }
 </script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>

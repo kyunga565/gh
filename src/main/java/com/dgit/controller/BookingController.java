@@ -17,7 +17,6 @@ public class BookingController {
 	@Inject
 	private BookingService service;
 
-
 	@RequestMapping(value = "booking", method = RequestMethod.POST)
 	public String book_Post(BookingVO vo, RedirectAttributes rttr) throws Exception {
 		service.reservation(vo);
@@ -37,8 +36,8 @@ public class BookingController {
 	@ResponseBody
 	@RequestMapping(value = "changeState", method = RequestMethod.GET)
 	public void stateChange(int bno) throws Exception {
-		System.out.println(bno+"예약취소로 변경");
+		System.out.println(bno + "예약취소로 변경");
 		service.changeState(bno);
 	}
-	
+
 }

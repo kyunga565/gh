@@ -33,16 +33,6 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<UserVO> selectuser(String id) throws Exception {
-		return session.selectList(namespace + ".selectuser", id);
-	}
-
-	// @Override
-	// public List<UserVO> selectmypage(String id) throws Exception {
-	// return session.selectList(namespace + ".selectmypage", id);
-	// }
-
-	@Override
 	public void dropout(String id) throws Exception {
 		session.delete(namespace + ".dropout", id);
 	}
@@ -53,8 +43,8 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public UserVO selectuser2(String id) throws Exception {
-		return session.selectOne(namespace + ".selectuser2", id);
+	public UserVO selectuser(String id) throws Exception {
+		return session.selectOne(namespace + ".selectuser", id);
 	}
 
 	@Override

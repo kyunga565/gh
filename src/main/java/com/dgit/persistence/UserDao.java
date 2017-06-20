@@ -9,12 +9,10 @@ public interface UserDao {
 	public void join(UserVO vo) throws Exception;
 	public UserVO login(LoginVO dto) throws Exception;
 	List<UserVO> idCheck() throws Exception;
-	List<UserVO> selectuser(String id) throws Exception;
-//	List<UserVO> selectmypage(String id) throws Exception;
 	void dropout(String id) throws Exception;
 	
 	void changePW(UserVO vo) throws Exception;
-	UserVO selectuser2(String id) throws Exception;
+	UserVO selectuser(String id) throws Exception;
 
 	void updatemem(UserVO vo) throws Exception;
 }

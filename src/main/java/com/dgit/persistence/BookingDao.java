@@ -1,9 +1,7 @@
 package com.dgit.persistence;
 
 import java.util.List;
-
 import com.dgit.domain.BookingVO;
-import com.dgit.domain.RoomVO;
 
 public interface BookingDao {
 

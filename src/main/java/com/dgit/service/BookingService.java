@@ -10,7 +10,9 @@ public interface BookingService {
 	int nextbno() throws Exception;
 	
 	int maxperson() throws Exception;
+	
 	int selectrno(String id) throws Exception;
+	
 	void delreservation(String id) throws Exception;
 	
 	void changeState(int bno) throws Exception;

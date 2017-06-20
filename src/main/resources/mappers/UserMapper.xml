@@ -18,31 +18,22 @@
 	<select id="idCheck" resultType="UserVO">
 		select uid from user
 	</select>
-	<select id="selectuser" resultType="UserVO">
-		select * from user where uid = #{uid}
-	</select>
-
-<!-- select uname,bno,rno,person,startdate,enddate,state from user u,booking b where u.uid=b.uid;
-	 select * from room,booking b,user u where u.uid=b.uid;
-	<select id="selectmypage" resultType="BookingVO">
-		select * from booking where uid=#{uid}
-	</select> 
--->
-	
 	<delete id="dropout">
 		delete from user where uid = #{uid}
 	</delete>
-	
+
 	<update id="changePW">
 		update user set upw = #{upw} where uid = #{uid}
 	</update>
 
-	<select id="selectuser2" resultType="UserVO">
-		select * from user where uid = #{uid}
+	<select id="selectuser" resultType="UserVO">
+		select * from user where uid
+		= #{uid}
 	</select>
-	
+
 	<update id="updatemem">
-		update user set uaddr=#{uaddr},utel=#{utel} where uid=#{uid}
+		update user set uaddr=#{uaddr},utel=#{utel} where
+		uid=#{uid}
 	</update>
-	
+
 </mapper>

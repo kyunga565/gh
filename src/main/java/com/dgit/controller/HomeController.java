@@ -1,26 +1,17 @@
 package com.dgit.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.dgit.domain.BookingVO;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.LoginVO;
 import com.dgit.domain.PageMaker;
-import com.dgit.domain.RoomVO;
-import com.dgit.domain.UserVO;
-import com.dgit.interceptor.LoginInterceptor;
 import com.dgit.service.BookingService;
 import com.dgit.service.RoomService;
 import com.dgit.service.UserService;
@@ -42,12 +33,9 @@ public class HomeController {
 	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public void roomviewGET(@ModelAttribute("dto") LoginVO dto, Model model) throws Exception {
 		model.addAttribute("roomVO", rservice.selectAll());
-		int Nextrno = rservice.nextrno();
-		model.addAttribute("nextRno", Nextrno);
-		int Nextbno = bservice.nextbno();
-		model.addAttribute("nextBno", Nextbno);
-		int Maxperson = bservice.maxperson();
-		model.addAttribute("maxperson", Maxperson);
+		model.addAttribute("nextRno", rservice.nextrno());
+		model.addAttribute("nextBno", bservice.nextbno());
+		model.addAttribute("maxperson", bservice.maxperson());
 	}
 
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
@@ -55,50 +43,37 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("userVO", uservice.selectuser(id));
-	//	model.addAttribute("mybook", bservice.selectbookfromid(id));
-	//	model.addAttribute("END", rservice.selectEND(id));
 	}
 
 	@RequestMapping(value = "adminpage", method = RequestMethod.GET)
-	public void adminpageGET(@ModelAttribute("cri") Criteria cri,Model model, HttpServletRequest request, HttpSession session) throws Exception {
-		
-	//	model.addAttribute("ADMIN", rservice.selectADMIN());
-		
+	public void adminpageGET(@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request,
+			HttpSession session) throws Exception {
 		/* 페이징 */
 		model.addAttribute("ADMIN", rservice.listCriteria(cri));
 		PageMaker pm = new PageMaker();
 		pm.setCri(cri);
 		pm.setTotalCount(rservice.countPaging(cri));
 		model.addAttribute("pageMaker", pm);
-
 	}
 
 	@RequestMapping(value = "adminpage_cal", method = RequestMethod.GET)
 	public void adminpage_cal(Model model) throws Exception {
 		model.addAttribute("ADMIN", rservice.selectADMIN());
 	}
-	
-
 
 	@RequestMapping(value = "mypage_cal", method = RequestMethod.GET)
 	public void mypage_calGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-	//	model.addAttribute("MYPAGE", rservice.selectMYPAGE());
 		model.addAttribute("roomVO", rservice.selectAll());
-		int Nextrno = rservice.nextrno();
-		model.addAttribute("nextRno", Nextrno);
-		int Nextbno = bservice.nextbno();
-		model.addAttribute("nextBno", Nextbno);
-		int Maxperson = bservice.maxperson();
-		model.addAttribute("maxperson", Maxperson);
-		
+		model.addAttribute("nextRno", rservice.nextrno());
+		model.addAttribute("nextBno", bservice.nextbno());
+		model.addAttribute("maxperson", bservice.maxperson());
 
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("END", rservice.selectEND(id));
-		
 	}
+
 	@RequestMapping(value = "mypage_res", method = RequestMethod.GET)
 	public void mypage_redGET(Model model, HttpServletRequest request, HttpSession session) throws Exception {
-
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("END", rservice.selectEND(id));
 	}

@@ -1,15 +1,10 @@
 package com.dgit.service;
 
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
-
 import com.dgit.domain.BookingVO;
-import com.dgit.domain.RoomVO;
 import com.dgit.persistence.BookingDao;
-import com.dgit.persistence.RoomDao;
 
 @Service
 public class BookingServiceImpl implements BookingService{

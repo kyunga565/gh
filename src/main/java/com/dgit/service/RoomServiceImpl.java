@@ -1,11 +1,11 @@
 package com.dgit.service;
 
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dgit.domain.BookingVO;
 import com.dgit.domain.Booking_Room;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.RoomVO;
@@ -20,21 +20,15 @@ public class RoomServiceImpl implements RoomService {
 	@Transactional
 	@Override
 	public void insertroom(RoomVO vo) throws Exception {
-
 		dao.insertroom(vo);
-		System.out.println("______1" + vo.getFiles() + " / " + vo.getRno());
 
 		// 파일추가
 		String[] files = vo.getFiles();
 		if (files == null)
 			return;
 		for (String fileName : files) {
-			System.out.println("______2" + fileName + " / " + vo.getRno());
-
 			dao.addAttach(fileName, vo.getRno());
-			System.out.println("______3" + vo.getFiles());
 		}
-
 	}
 
 	@Override
@@ -45,7 +39,6 @@ public class RoomServiceImpl implements RoomService {
 			List<String> files = dao.getAttach(vo.get(i).getRno());
 			vo.get(i).setFiles(files.toArray(new String[files.size()]));
 			
-			System.out.println(files+"파일1");
 		}
 		return vo;
 	}
@@ -80,7 +73,6 @@ public class RoomServiceImpl implements RoomService {
 		dao.update(vo);
 
 		String[] files = vo.getFiles();
-		System.out.println(files + "파일2"+vo.getRno());
 		if (files == null)
 			return;
 		
@@ -90,25 +82,11 @@ public class RoomServiceImpl implements RoomService {
 		}
 	}
 	
-/*	@Override
-	public List<RoomVO> selectbook(String id) throws Exception {	
-		List<RoomVO> vo = dao.selectbook(id);
-//		List<RoomVO> vo = dao.selectAll();
-
-		for (int i = 0; i < dao.selectbook(id).size(); i++) {
-			List<String> files = dao.getAttach(vo.get(i).getRno());
-			vo.get(i).setFiles(files.toArray(new String[files.size()]));
-		}
-		return vo;
-	//	return dao.selectbook(id);
-	}*/
-
 	@Override
 	public List<Booking_Room> selectEND(String id) throws Exception {
-		
 		List<Booking_Room> vo = dao.selectEND(id);
 
-		for (int i = 0; i < dao.selectbook(id).size(); i++) {
+		for (int i = 0; i < dao.selectEND(id).size(); i++) {
 			List<String> files = dao.getAttach(vo.get(i).getRno());
 			vo.get(i).setFiles(files.toArray(new String[files.size()]));
 		}
@@ -118,7 +96,6 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public List<Booking_Room> selectADMIN() throws Exception {
-
 		List<Booking_Room> vo = dao.selectADMIN();
 
 		for (int i = 0; i < dao.selectADMIN().size(); i++) {
@@ -139,11 +116,6 @@ public class RoomServiceImpl implements RoomService {
 		return dao.selectADMIN_update(bno);
 	}
 
-/*	@Override
-	public List<Booking_Room> selectMYPAGE() throws Exception {
-		return dao.selectMYPAGE();
-	}*/
-
 	@Override
 	public List<Booking_Room> listCriteria(Criteria cri) throws Exception {
 		List<Booking_Room> vo = dao.listCriteria(cri);
@@ -153,12 +125,23 @@ public class RoomServiceImpl implements RoomService {
 			vo.get(i).setFiles(files.toArray(new String[files.size()]));
 		}
 		return vo;
-		
-	//	return dao.listCriteria(cri);
 	}
+	
 	@Override
 	public int countPaging(Criteria cri) throws Exception {
 		return dao.countPaging(cri);
+	}
+
+	/* 해당방에 들어갈수있는인원 */
+	@Override
+	public int selectpeople(int rno) throws Exception {
+		return dao.selectpeople(rno);
+	}
+
+	/* ㅇㅖ약된 인원 */
+	@Override
+	public int selectsumperson(int rno,Date startdate) throws Exception {
+		return dao.selectsumperson(rno,startdate);
 	}
 
 

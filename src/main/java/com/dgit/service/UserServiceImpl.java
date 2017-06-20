@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void join(UserVO vo) throws Exception {
 		dao.join(vo);
-
 	}
 
 	@Override
@@ -36,16 +35,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserVO> selectuser(String id) throws Exception {
-		return dao.selectuser(id);
-	}
-
-//	@Override
-//	public List<UserVO> selectmypage(String id) throws Exception {
-//		return dao.selectmypage(id);
-//	}
-
-	@Override
 	public void dropout(String id) throws Exception {
 		bdao.delreservation(id);
 		dao.dropout(id);
@@ -57,8 +46,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserVO selectuser2(String id) throws Exception {
-		return dao.selectuser2(id);
+	public UserVO selectuser(String id) throws Exception {
+		return dao.selectuser(id);
 	}
 
 	@Override

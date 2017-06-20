@@ -2,7 +2,6 @@ package com.dgit.controller;
 
 import java.util.List;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.dgit.domain.Booking_Room;
 import com.dgit.domain.LoginVO;
 import com.dgit.domain.UserVO;
-import com.dgit.interceptor.LoginInterceptor;
 import com.dgit.service.UserService;
 
 @Controller
@@ -38,7 +35,6 @@ public class UserController {
 
 	@RequestMapping(value = "join", method = RequestMethod.POST)
 	public String joinPOST(UserVO vo, RedirectAttributes rttr) throws Exception {
-		logger.info("회원가입POST 실행");
 		service.join(vo);
 		rttr.addFlashAttribute("result", "success");
 		return "redirect:/main";
@@ -46,13 +42,12 @@ public class UserController {
 
 	@RequestMapping(value = "login-post", method = RequestMethod.POST)
 	public String loginPOST(LoginVO dto, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
-		
-		logger.info("로그인 POST 실행");
+
 		UserVO vo = service.login(dto);
-		 System.out.println(dto.getUid()+" / ");
-		if (vo == null){
+		System.out.println(dto.getUid() + " / ");
+		if (vo == null) {
 			rttr.addFlashAttribute("error", "x");
-		}else{ 
+		} else {
 			rttr.addFlashAttribute("error", "o");
 			session.setAttribute("id", dto.getUid());
 		}
@@ -63,7 +58,6 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "idCheck/{uid}", method = RequestMethod.GET)
 	public ResponseEntity<String> checkId(@PathVariable("uid") String uid) throws Exception {
-		logger.info("왓다감");
 		ResponseEntity<String> result = null;
 		try {
 			List<UserVO> vo = service.idCheck();
@@ -84,20 +78,17 @@ public class UserController {
 		}
 		return result;
 	}
-	
 
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, RedirectAttributes rttr) throws Exception {
 		String vo = (String) session.getAttribute("id");
-		if(vo != null){
+		if (vo != null) {
 			session.removeAttribute("id");
 			session.invalidate();
 		}
 		rttr.addFlashAttribute("logout", "success");
 		return "redirect:/main";
 	}
-
-	
 
 	@ResponseBody
 	@RequestMapping(value = "dropout", method = RequestMethod.GET)
@@ -106,25 +97,25 @@ public class UserController {
 		service.dropout(id);
 		session.removeAttribute("id");
 		session.invalidate();
-		System.out.println("회원탈퇴"+id);
+		System.out.println("회원탈퇴" + id);
 	}
 
 	@RequestMapping(value = "changePW", method = RequestMethod.POST)
 	public String changePW(LoginVO dto, HttpSession session, RedirectAttributes rttr) throws Exception {
 		String id = (String) session.getAttribute("id");
-		UserVO vo =  service.selectuser2(id);
+		UserVO vo = service.selectuser(id);
 		vo.setUpw(dto.getUpw());
 		service.changePW(vo);
-		
+
 		rttr.addFlashAttribute("changePW", "success");
 		return "redirect:/mypage";
 	}
 
 	@RequestMapping(value = "mem_update", method = RequestMethod.POST)
-	public String memUPDATE(UserVO vo,HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String memUPDATE(UserVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
 		String id = (String) session.getAttribute("id");
-		UserVO user =  service.selectuser2(id);
-		 
+		UserVO user = service.selectuser(id);
+
 		user.setUtel(vo.getUtel());
 		user.setUaddr(vo.getUaddr());
 		service.updatemem(user);
@@ -132,5 +123,5 @@ public class UserController {
 		rttr.addFlashAttribute("changeMEM", "success");
 		return "redirect:/mypage";
 	}
-	
+
 }

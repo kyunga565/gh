@@ -19,4 +19,6 @@ public interface UserService {
 	UserVO selectuser(String id) throws Exception;
 	
 	void updatemem(UserVO vo) throws Exception;
+	/* 멤버리스트 */
+	List<UserVO> selectAllmember() throws Exception;
 }

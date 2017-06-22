@@ -5,6 +5,7 @@ import java.util.List;
 import com.dgit.domain.Booking_Room;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.RoomVO;
+import com.dgit.domain.SearchCriteria;
 
 public interface RoomService {
 	void insertroom(RoomVO vo) throws Exception;
@@ -23,6 +24,19 @@ public interface RoomService {
 	
 	List<Booking_Room> selectEND(String id) throws Exception;
 	
+	
+	
+//
+//	
+//	List<Booking_Room> selectEND1(String id,int page) throws Exception;
+//
+//	List<Booking_Room> selectEND2(String id,Criteria cri) throws Exception;
+//	
+//	public int selectEND3(String id) throws Exception;
+//	
+	
+	
+	
 	List<Booking_Room> selectADMIN() throws Exception;
 	
 	Booking_Room selectADMIN_update(int bno) throws Exception;
@@ -38,4 +52,11 @@ public interface RoomService {
 	int selectpeople(int rno) throws Exception;
 	/* ㅇㅖ약된 인원 */
 	int selectsumperson(int rno,Date startdate) throws Exception;
+	
+	/* 찾기 */
+
+	public List<Booking_Room> listSearch(SearchCriteria cri) throws Exception;
+	
+	public int listSearchCount(SearchCriteria cri) throws Exception;
+
 }

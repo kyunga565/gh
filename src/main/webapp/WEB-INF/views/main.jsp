@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>Day Day Daegu</title>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -69,10 +69,13 @@ var dateFormat = "yy/mm/dd",
                 <ul class="nav navbar-nav navbar-right">
                  <c:if test="${id == 'admin'}">
                  	<li>
-                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage" style="color:#f05f40"> <%=session.getAttribute("id")%></a>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage?page=1&perPageNum=5&searchType=part" style="color:#f05f40"> <%=session.getAttribute("id")%></a>
+                    </li>
+                 	<li>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage_mem" style="color:#f05f40"> MEMBERS</a>
                     </li>
                  </c:if>
-                  <c:if test="${id != 'admin' && id != null}">
+                 <c:if test="${id != 'admin' && id != null}">
              		<li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id")%> 님 반갑습니다! </a>
                     </li>
@@ -104,9 +107,7 @@ var dateFormat = "yy/mm/dd",
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container-fluid -->
     </nav>
   
         
@@ -175,7 +176,6 @@ var dateFormat = "yy/mm/dd",
 					<input type="text" id="upw" name="upw" placeholder="비밀번호확인"/><br><span class="checkpw"> 비밀번호를 확인하세요.</span><br>
 					<input type="text" name="uaddr" placeholder="주소"/><br><br>
 					<input type="text" name="utel" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
-					
 					<p>
 						<button type="submit" class="btn-room"> 가입하기  </button>
 					</p>
@@ -256,7 +256,7 @@ var dateFormat = "yy/mm/dd",
 					if (people < (now + person)) {
 						swal({
 							title : "예약불가",
-							text : "해당시설은 이미 예약되었습니다.",
+							text : "해당시설은 예약할수없습니다.",
 							type : "info",
 							confirmButtonColor : "#DD6B55"
 						})
@@ -640,7 +640,7 @@ var dateFormat = "yy/mm/dd",
 <script type="text/javascript">
 if ('${result}' == "success") {
 	swal("회원가입이 완료되었습니다!")
-	$("#join-wrap").slideToggle(1000)
+	$("#login-wrap").slideDown(1000)
 }
 if ('${logout}' == "success") {
 	swal({

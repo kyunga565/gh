@@ -35,5 +35,7 @@
 		update user set uaddr=#{uaddr},utel=#{utel} where
 		uid=#{uid}
 	</update>
-
+	<select id="selectAllmember" resultType="UserVO">
+		select * from user
+	</select>
 </mapper>

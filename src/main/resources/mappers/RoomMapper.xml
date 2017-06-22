@@ -52,12 +52,35 @@
 
 	<select id="selectEND" resultType="Booking_Room">
 		select * from bookroom where
-		uid = #{uid} order by bno desc
+		uid = #{uid} order by state , bno desc;
 	</select>
+	
+	
+	
+<!-- 	
+	<select id="selectEND1" resultType="Booking_Room">
+		select * from bookroom where
+		uid = #{uid} order by bno desc limit #{page},5
+	</select>
+	<select id="selectEND2" resultType="Booking_Room">
+		select * from bookroom
+		where uid=#{uid} 
+		order
+		by bno desc limit #{pageStart},#{perPageNum}
+	</select>
+	<select id="selectEND3" resultType="int">
+		select count(bno) from
+		bookroom where uid =#{uid}
+	</select> 
+-->
+
+
+
 
 	<select id="selectADMIN" resultType="Booking_Room">
 		select * from bookroom order
-		by bno desc
+		by startdate desc
+		<!-- by bno desc -->
 	</select>
 
 	<select id="selectADMIN_update" resultType="Booking_Room">
@@ -85,7 +108,8 @@
 		select * from bookroom
 		where bno>0
 		order
-		by bno desc limit #{pageStart},#{perPageNum}
+		<!-- by bno desc limit #{pageStart},#{perPageNum} -->
+		by startdate desc limit #{pageStart},#{perPageNum}
 	</select>
 	<select id="countPaging" resultType="int">
 		select count(bno) from
@@ -96,9 +120,36 @@
 	<select id="selectpeople" resultType="int">
 		select people from room where rno = #{rno}
 	</select>
-
-	<!-- 	select sum(person) from booking where rno = #{rno} -->
 	<select id="selectsumperson" resultType="int">
 		select if(sum(person) is null,0,sum(person)) from booking where rno = #{rno} and state='예약' and (startdate=#{startdate} or enddate=#{startdate})
 	</select>
+	
+	<!-- 찾기 -->
+	
+	<select id="listSearch" resultType="Booking_Room">
+		select * from bookroom  <include refid="search"></include>  order by startdate desc limit #{pageStart},#{perPageNum} 
+	</select>
+	
+	<select id="listSearchCount" resultType="int">
+		select count(bno) from bookroom  <include refid="search"></include>
+	</select>
+	
+	
+	<sql id="search">
+		<if test="searchType == 'all'.toString()">
+			
+		</if>
+		<if test="searchType == 'part'.toString()">
+			where state='예약'
+		</if>
+		<if test="searchType == 'cancel'.toString()">
+			where state='예약취소'
+		</if>
+		<if test="searchType == 'done'.toString()">
+			where state='예약종료'
+		</if>
+	</sql>
+	
+	
+	
 </mapper>

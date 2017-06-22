@@ -52,4 +52,9 @@ public class UserDaoImpl implements UserDao {
 		session.update(namespace + ".updatemem", vo);
 	}
 
+	@Override
+	public List<UserVO> selectAllmember() throws Exception {
+		return session.selectList(namespace+".selectAllmember");
+	}
+
 }

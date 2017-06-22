@@ -5,10 +5,10 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.dgit.domain.Booking_Room;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.RoomVO;
+import com.dgit.domain.SearchCriteria;
 import com.dgit.persistence.RoomDao;
 
 @Service
@@ -142,6 +142,53 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public int selectsumperson(int rno,Date startdate) throws Exception {
 		return dao.selectsumperson(rno,startdate);
+	}
+
+	
+//
+//	@Override
+//	public List<Booking_Room> selectEND1(String id,int page) throws Exception {
+//		List<Booking_Room> vo = dao.selectEND1(id,page);
+//
+//		for (int i = 0; i < dao.selectEND1(id,page).size(); i++) {
+//			List<String> files = dao.getAttach(vo.get(i).getRno());
+//			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+//		}
+//		return vo;
+//		
+//	}
+//	@Override
+//	public List<Booking_Room> selectEND2(String id,Criteria cri) throws Exception {
+//		List<Booking_Room> vo = dao.selectEND2(id,cri);
+//		System.out.println(vo);
+//		System.out.println(cri);
+//		System.out.println("--------------------------------------");
+//		for (int i = 0; i < dao.selectEND2(id,cri).size(); i++) {
+//			List<String> files = dao.getAttach(vo.get(i).getRno());
+//			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+//		}
+//		System.out.println(vo);
+//		return vo;
+//	}
+//
+//	@Override
+//	public int selectEND3( String id) throws Exception {
+//		return dao.selectEND3( id);
+//	}
+	@Override
+	public List<Booking_Room> listSearch(SearchCriteria cri) throws Exception {
+		List<Booking_Room> vo = dao.listSearch(cri);
+
+		for (int i = 0; i < dao.listSearch(cri).size(); i++) {
+			List<String> files = dao.getAttach(vo.get(i).getRno());
+			vo.get(i).setFiles(files.toArray(new String[files.size()]));
+		}
+		return vo;
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
 	}
 
 

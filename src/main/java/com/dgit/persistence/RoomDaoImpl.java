@@ -4,14 +4,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.dgit.domain.Booking_Room;
 import com.dgit.domain.Criteria;
 import com.dgit.domain.RoomVO;
+import com.dgit.domain.SearchCriteria;
 
 @Repository
 public class RoomDaoImpl implements RoomDao {
@@ -70,11 +69,17 @@ public class RoomDaoImpl implements RoomDao {
 		session.delete(namespace + ".removeAttach", rno);
 	}
 
+	
+	
+	
 	@Override
 	public List<Booking_Room> selectEND(String id) throws Exception {
 		return session.selectList(namespace + ".selectEND", id);
 	}
 
+	
+	
+	
 	@Override
 	public List<Booking_Room> selectADMIN() throws Exception {
 		return session.selectList(namespace + ".selectADMIN");
@@ -127,4 +132,54 @@ public class RoomDaoImpl implements RoomDao {
 		map.put("startdate", startdate);
 		return session.selectOne(namespace + ".selectsumperson", map);
 	}
+
+
+//	
+//	@Override
+//	public List<Booking_Room> selectEND1(String id,int page) throws Exception {
+//		if (page >= 0) {
+//			page = 1;
+//		}
+//		page = (page - 1) * 5;
+//		
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("page", page);
+//		map.put("id", id);
+//		
+//		
+//		return session.selectList(namespace + ".selectEND1", map);
+//	}
+//
+//	
+//	
+//	@Override
+//	public List<Booking_Room> selectEND2(String id,Criteria cri) throws Exception {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("id", id);
+//		map.put("cri", cri);
+//		System.out.println(cri+id+"---------");
+//		return session.selectList(namespace+".selectEND2",map);
+//	}
+//
+//	@Override
+//	public int selectEND3(String id) throws Exception {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//	//	map.put("cri", cri);
+//		map.put("id", id);
+//		return session.selectOne(namespace + ".selectEND3", id);
+//	}
+	
+	
+
+	@Override
+	public List<Booking_Room> listSearch(SearchCriteria cri) throws Exception {
+		return session.selectList(namespace + ".listSearch", cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return session.selectOne(namespace + ".listSearchCount", cri);
+	}
+	
 }

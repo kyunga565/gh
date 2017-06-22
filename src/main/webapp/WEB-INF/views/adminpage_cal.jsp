@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>jQuery UI Datepicker - Select a Date Range</title>
+<title>Day Day Daegu</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/fullcalendar.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -40,6 +40,9 @@
                  <% if(session.getAttribute("id") != null ){ %>
                  	<li>
                         <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage" style="color:#f05f40"> <%=session.getAttribute("id") %></a>
+                    </li>
+                 	<li>
+                        <a class="page-scroll" href="${pageContext.request.contextPath}/adminpage_mem" style="color:#f05f40"> MEMBERS</a>
                     </li>
                  <%} %>
                     <li>
@@ -152,7 +155,7 @@ $(function(){
             <c:forEach var="a" items="${ADMIN}">
 			{
 			  title: '${a.roomname} (${a.state})',
-			  content :'${a.uid} <br> ${a.person}명 <br> ${a.state} <br>'+
+			  content :'${a.uid} <br> ${a.roomname} <br> ${a.person}명 <br> ${a.state} <br>'+
 			  ' <fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" /> ~'+
 			  ' <fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />',
 			  start: '<fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" />',
@@ -169,7 +172,7 @@ $(function(){
 		eventClick:function(e){
 			swal({
 				title:"예약정보",
-				text:"<b style='color:#f8a760'>"+e.content+"</b>",
+				text:"<b style='color:#f05f40'>"+e.content+"</b>",
 				html:true
 			})
 		}

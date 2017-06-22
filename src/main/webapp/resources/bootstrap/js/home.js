@@ -293,8 +293,33 @@ $(function() {
 		}	
 	})
 	
-			
+	/* 회원목록에서 예약현황보기 
+	$(".btn-mem").each(function(i, obj) {
+		$(".btn-mem").eq(i).click(function(e){
+			e.preventDefault();
+			var uid = $(this).val()
+			console.log(uid)
+			$.ajax({
+				url:"mem",
+				data:{"uid":uid},
+				dataType:"text",
+				type:"get",
+				success:function(data){
+					console.log(data[0]);
 
+	            <c:forEach var="a" items="${MEMBER}">
+				'${MEMBER.uid}'
+				</c:forEach>
+					
+				},error:function(){
+					console.log("에러")
+				}
+			})
+			
+		})
+		
+	})
+*/
 	
 		
 	

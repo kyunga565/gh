@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.dgit.domain.LoginVO;
+import com.dgit.domain.RoomVO;
 import com.dgit.domain.UserVO;
 import com.dgit.persistence.BookingDao;
 import com.dgit.persistence.UserDao;
@@ -53,6 +54,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updatemem(UserVO vo) throws Exception {
 		dao.updatemem(vo);
+	}
+
+	@Override
+	public List<UserVO> selectAllmember() throws Exception {
+		
+		return dao.selectAllmember();
 	}
 
 	

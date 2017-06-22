@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>jQuery UI Datepicker - Select a Date Range</title>
+<title>Day Day Daegu</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/fullcalendar.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -126,6 +126,48 @@
 			</div>
 		</div>
 	
+				
+		<script type="text/javascript">
+			$("#res").click(function(e){
+				e.preventDefault()
+				var person = $("select[name='person']").val()//예약하려는인원
+				var rno = $("select[name='rno']").val()
+				//해당방에들어갈수인원 <(예약하려는인원+예약된인원) 리턴
+				console.log("선택한 방번호 :"+ rno)
+				var startdate = $("#from").val()
+				
+			$.ajax({
+				url : "people",
+				dataType : "json",
+				data : {
+					"rno" : rno,
+					"startdate" : startdate
+				},
+				type : "get",
+				success : function(data) {
+					var now = data.sumperson //현재예약된인원
+					var people = data.people // 들어갈수있는인원
+				
+				 	if (people < (now + person)) {
+						swal({
+							title : "예약불가",
+							text : "해당시설은 예약불가입니다.",
+							type : "info",
+							confirmButtonColor : "#DD6B55"
+						})
+						return false
+					} 
+					
+					$("form[name='f4']").attr("action", "booking_cal");
+					$("form[name='f4']").attr("method", "post");
+					$("form[name='f4']").submit();
+					
+					},error : function(data, msg) {
+						console.log("에러?" + data + msg)
+					}
+				})
+			})
+		</script>
 	
 	
 	
@@ -241,9 +283,9 @@ $(function(){
 			  start: '<fmt:formatDate pattern="yyyy-MM-dd" value="${a.startdate}" />',
 			  end:'<fmt:formatDate pattern="yyyy-MM-dd" value="${a.enddate}" />'
 			  <c:choose>
-			  <c:when test="${a.state=='예약취소'}">,color : '#d2e1e7'</c:when>
+			  <c:when test="${a.state=='예약취소'}">,color : '#fcdad3'</c:when>
 		      <c:when test="${a.state=='예약'}">,color : '#f0634b'</c:when>
-		      <c:when test="${a.state=='예약종료'}">,color : '#cdcdcd'</c:when>
+		      <c:when test="${a.state=='예약종료'}">,color : '#ddddd9'</c:when>
 		      <c:otherwise>,color : '#f0634b' </c:otherwise>
 			  </c:choose>
 			},

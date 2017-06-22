@@ -355,3 +355,26 @@ form[name='f4'] select {
 	height: 30px;
 	border-radius: 5px;
 }
+
+#sel_search {
+	width: 100px;
+	border: 2px solid #d2e1e7;
+	height: 35px;
+	border-radius: 5px;
+}
+#sel_wrap{
+	float: right;
+}
+
+
+.btn-mem {
+	border: 1px solid #d2e1e7;
+	padding: 10px;
+	margin: 10px;
+	color: #f05f40;
+	border-radius: 10px;
+	background-color: #d2e1e7;
+	font-size: 12px;
+	font-weight: bold;
+}
+

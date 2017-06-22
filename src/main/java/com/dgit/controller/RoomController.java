@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dgit.domain.Booking_Room;
+import com.dgit.domain.PageMaker;
 import com.dgit.domain.RoomVO;
+import com.dgit.domain.SearchCriteria;
 import com.dgit.service.RoomService;
 import com.dgit.util.MediaUtils;
 import com.dgit.util.UploadFileUtils;
@@ -135,7 +138,7 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "updatebookroom", method = RequestMethod.POST)
-	public String roombookUPDATE(Booking_Room vo, int bno, HttpSession session) throws Exception {
+	public String roombookUPDATE(@ModelAttribute("cri") SearchCriteria cri,Booking_Room vo, int bno,Model model) throws Exception {
 
 		Booking_Room br = service.selectADMIN_update(bno);
 		br.setState(vo.getState());
@@ -144,7 +147,13 @@ public class RoomController {
 		br.setEnddate(vo.getEnddate());
 
 		service.updatebookroom(br);
-		return "redirect:/adminpage";
+		
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+	//	pm.setTotalCount(service.listSearchCount(cri));
+	//	model.addAttribute("pageMaker", pm);
+		
+		return "redirect:/adminpage"+ pm.makeSearch(cri.getPage())+"="+cri.getSearchType();
 	}
 	
 	@ResponseBody

@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Day Day Daegu</title>
+<title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -38,7 +38,7 @@
                         <a class="page-scroll" href="${pageContext.request.contextPath}/mypage" style="color:#f05f40"> <%=session.getAttribute("id") %> 님 반갑습니다!</a>
                     </li>
                     <li>
-                    	<a class="page-scroll" href="${pageContext.request.contextPath}/mypage_res" style="color:#f05f40"> MYreservation </a>
+                    	<a class="page-scroll" href="${pageContext.request.contextPath}/mypage_res"> MYreservation </a>
                     </li>
                  <%} %>
                     <li>
@@ -72,6 +72,53 @@
   <br><br><br>
       
     
+ 
+		<div id="member-pw-update-wrap">
+			<div class="login-header"></div><!-- 다홍색헤더1px -->
+			<div class="login-header2"><span><%=session.getAttribute("id") %>님의 회원정보 </span>
+				<a href="" class="mem-closebtn">
+					<img src="${pageContext.request.contextPath}/resources/bootstrap/img/x-button.png" />
+				</a>
+			</div>
+			<div class="member-update-div">
+				<form action="changePW" method="post" name="f5">
+					<c:forEach items="${userVO }" var="i">
+						<input type="hidden" value="${i.upw }" id="default_pw" />
+					</c:forEach>
+					<input type="text" placeholder="기존비밀번호" id="default_pw2" /><br><span class="default_checkpw"> 기존비밀번호를 확인하세요.</span><br>
+					<input type="text" id="upw0" name="upw0" placeholder="변경할비밀번호" /><br><br>
+					<input type="text" id="upw" name="upw" placeholder="비밀번호확인" /><br><span class="checkpw"> 비밀번호를 확인하세요.</span><br>
+					<p style="padding-left: 40px;">
+						<button type="submit" class="btn-room"> 비밀번호 수정완료  </button>
+					</p>
+				</form>
+			</div>
+		</div>
+      
+
+    
+ 
+		<div id="member-info-update-wrap">
+			<div class="login-header"></div><!-- 다홍색헤더1px -->
+			<div class="login-header2"><span><%=session.getAttribute("id") %>님의 회원정보 </span>
+				<a href="" class="mem-closebtn">
+					<img src="${pageContext.request.contextPath}/resources/bootstrap/img/x-button.png" />
+				</a>
+			</div>
+			<div class="member-update-div">
+				<form action="mem_update" method="post" name="f6">
+				<c:forEach items="${userVO }" var="i">
+					<input type="text" value="<%=session.getAttribute("id") %>" readonly="readonly"/><br><br>
+					<input type="text" name="uaddr" value="${i.uaddr }" placeholder="주소"/><br><br>
+					<input type="text" name="utel" value="${i.utel }" placeholder="전화번호 / -없이 입력하세요"/><br><br><br>
+					<p style="padding-left: 40px;">
+						<button type="submit" class="btn-room"> 회원정보 수정완료  </button>
+					</p>
+				</c:forEach>	
+				</form>
+			</div>
+		</div>
+      
 
 
 	<input type="hidden" id="session-id" value="<%=session.getAttribute("id") %>" />
@@ -79,9 +126,48 @@
 		
 
 <div id="section-wrap" style="background-color: rgba(218,207,118,0.1);">
-
+<section id="mypage">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">MYPAGE </h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container" id="mypage_crop">
+            <div class="row">
+                <div class="text-center" style="border:2px dotted #d2e1e7;width:50%;margin:0 auto;">
+                    <div style="width:80%;margin:0 auto;padding:40px;">
+                    	<c:forEach items="${userVO }" var="i">
+                    	<table style="margin:0 auto;">
+                    		<tr>
+                    			<td style="width:100px;color:#222222;font-weight: bold;">아이디</td>
+                    			<td style="padding:20px;"> <b style="font-size: 15px;">${i.uid }</b> <br> <a href="" id="chPW">[비밀번호변경]</a></td>
+                    		</tr>
+                    		<tr>
+                    			<td style="color:#222222;font-weight: bold;">이름</td>
+                    			<td style="padding:20px;">${i.uname }</td>
+                    		</tr>
+                    		<tr>
+                    			<td style="color:#222222;font-weight: bold;">주소</td>
+                    			<td style="padding:20px;">${i.uaddr }</td>
+                    		</tr>
+                    		<tr>
+                    			<td style="color:#222222;font-weight: bold;">전화번호</td>
+                    			<td style="padding:20px;">${i.utel }</td>
+                    		</tr>
+                    	</table>
+                    	</c:forEach>
+                    </div>
+                <button id="updatemem" class="btn-room">수정</button><button id="dropout" class="btn-room">회원탈퇴</button><br><br><br>
+               
+                </div>
+            </div>
+        </div>
+    </section>
     
-	<section id="reservation">
+	<%-- <section id="reservation">
         <div class="container">
 
             <div class="row">
@@ -116,12 +202,8 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			
         </div>
-    </section>
+    </section> --%>
 </div><!-- end of #section-wrap -->
    
 	<section id="contact">
@@ -152,14 +234,6 @@ if ('${changePW}' == "success") {
 }
 if('${changeMEM}' == "success"){
 	swal("회원정보가 변경되었습니다.")
-}
-if ('${book}' == "success") {
-	swal({
-		title:"예약완료!",
-		type:"success",
-		timer:1000,
-		showConfirmButton: false
-	})
 }
 </script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/sweetalert.min.js"></script>
